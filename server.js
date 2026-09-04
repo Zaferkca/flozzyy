@@ -16,7 +16,7 @@ const defaultSettings = {
     musicUrl: '',
     bioText: "Don't try to figure me out you'll never succeed",
     adminPassword: '123',
-    viewCount: 14 // Başlangıç değeri
+    viewCount: 14
 };
 
 function getSettings() {
@@ -38,17 +38,20 @@ app.get('/', (req, res) => {
 
 app.get('/profile', (req, res) => {
     const settings = getSettings();
-    
-    // Her profile girişte sayaç artar ve kaydedilir
-    settings.viewCount = (settings.viewCount || 14) + 1;
-    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2), 'utf8');
-
     const user = {
         id: '772859992109875252',
         username: 'morfixcik',
         global_name: 'Flozzy'
     };
     res.render('profile', { user, settings });
+});
+
+// Benzersiz ziyaretçi sayısını artıran güvenli API yolu
+app.post('/api/increment-view', (req, res) => {
+    const settings = getSettings();
+    settings.viewCount = (settings.viewCount || 14) + 1;
+    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2), 'utf8');
+    res.json({ success: true, viewCount: settings.viewCount });
 });
 
 app.get('/admin', (req, res) => {

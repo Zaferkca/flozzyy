@@ -23,7 +23,6 @@
         }
         .bg-video { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -2; }
 
-        /* Click to Enter Perdesi */
         #enterOverlay {
             position: fixed;
             top: 0;
@@ -31,7 +30,7 @@
             width: 100vw;
             height: 100vh;
             background: rgba(5, 5, 5, 0.92);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -90,17 +89,19 @@
 
         .bio-text { font-size: 14px; color: #cccccc; margin-bottom: 8px; text-align: center; max-width: 400px; padding: 0 15px; }
 
+        /* Daha Saydam ve Şık Discord Kartı Tasarımı */
         .discord-card {
-            background: rgba(15, 15, 18, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px);
+            background: rgba(15, 15, 18, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 16px 20px;
-            width: 380px;
+            padding: 18px 22px;
+            width: 390px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.03);
         }
         .card-top { display: flex; align-items: center; gap: 14px; }
         .card-avatar-wrapper { position: relative; width: 58px; height: 58px; flex-shrink: 0; }
@@ -108,40 +109,40 @@
         .status-dot { width: 15px; height: 15px; border-radius: 50%; position: absolute; bottom: 0px; right: 0px; border: 3px solid #0f0f12; background-color: #747f8d; }
         .card-user-info { display: flex; flex-direction: column; }
         .card-username { font-size: 17px; font-weight: 700; color: #ffffff; }
-        .card-status-text { font-size: 13px; color: #a0a0a0; font-style: italic; }
+        .card-status-text { font-size: 13px; color: #b0b0b0; font-style: italic; }
 
         .activity-box {
             display: none;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
             padding: 12px;
             flex-direction: column;
             gap: 8px;
         }
-        .activity-header { font-size: 12px; font-weight: 700; color: #b9bbbe; margin-bottom: 2px; }
+        .activity-header { font-size: 11px; font-weight: 700; color: #a0a0a5; letter-spacing: 0.5px; margin-bottom: 2px; }
         .activity-main { display: flex; align-items: center; gap: 12px; width: 100%; }
-        .activity-album { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+        .activity-album { width: 50px; height: 50px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
         .activity-details { display: flex; flex-direction: column; overflow: hidden; width: 100%; }
         .activity-title { font-size: 13px; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .activity-sub { font-size: 12px; color: #b3b3b3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
         .progress-container { width: 100%; display: flex; align-items: center; gap: 8px; margin-top: 4px; }
         .time-text { font-size: 11px; color: #888888; font-family: monospace; white-space: nowrap; }
-        .bar-bg { flex-grow: 1; height: 4px; background: rgba(255, 255, 255, 0.1); border-radius: 2px; overflow: hidden; }
-        .bar-fill { height: 100%; background: #ffffff; width: 0%; transition: width 0.3s linear; }
+        .bar-bg { flex-grow: 1; height: 5px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; overflow: hidden; }
+        .bar-fill { height: 100%; background: #43b581; width: 0%; transition: width 0.3s linear; border-radius: 3px; }
 
-        .socials { display: flex; gap: 20px; margin-top: 10px; }
-        .socials a { color: #ffffff; font-size: 26px; text-decoration: none; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)); transition: transform 0.2s; }
+        .socials { display: flex; gap: 20px; margin-top: 8px; }
+        .socials a { color: #ffffff; font-size: 24px; text-decoration: none; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)); transition: transform 0.2s; }
         .socials a:hover { transform: scale(1.15); }
 
-        /* İstediğin Stil & Konumda Sayaç Kutusu */
+        /* Sağ üst sayac kutusu */
         .view-counter {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: rgba(18, 18, 22, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(18, 18, 22, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             color: #fff;
             padding: 8px 18px;
@@ -155,8 +156,8 @@
             z-index: 10;
         }
         .view-counter span:first-child {
-            font-size: 10px;
-            color: #888;
+            font-size: 9px;
+            color: #999;
             text-transform: uppercase;
             font-weight: 600;
             letter-spacing: 0.5px;
@@ -167,31 +168,62 @@
             gap: 6px;
             font-weight: 700;
         }
-        .view-counter-inner i {
-            color: #aaa;
-            font-size: 12px;
+        .view-counter-inner i { color: #ccc; font-size: 12px; }
+
+        /* Sol Alt Ses Kontrol Paneli */
+        .audio-control {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(18, 18, 22, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 8px 14px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 10;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        .audio-control button {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .audio-slider {
+            width: 70px;
+            accent-color: #ffffff;
+            cursor: pointer;
+            height: 4px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Click to Enter Ekranı -->
     <div id="enterOverlay">
         <div class="enter-text">click to enter...</div>
     </div>
 
-    <!-- İstediğin Tarzda Sağ Üst Sayaç -->
     <div class="view-counter">
         <span>Profile Views</span>
         <div class="view-counter-inner">
             <i class="fa-solid fa-eye"></i>
-            <span><%= settings.viewCount %></span>
+            <span id="viewCountDisplay"><%= settings.viewCount %></span>
         </div>
     </div>
 
     <video id="bgVideo" loop muted class="bg-video">
         <source src="/Rarity43_pindown.io_1788465739.mp4" type="video/mp4">
     </video>
+
+    <!-- Sol Alt Ses Ayar Paneli -->
+    <div class="audio-control">
+        <button id="muteBtn"><i class="fa-solid fa-volume-high"></i></button>
+        <input type="range" id="volumeSlider" class="audio-slider" min="0" max="1" step="0.05" value="1">
+    </div>
 
     <div class="avatar-container">
         <img id="mainAvatar" class="main-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar">
@@ -229,7 +261,7 @@
                 <div class="bar-bg">
                     <div id="barFill" class="bar-fill"></div>
                 </div>
-                <span id="totalTime" class="time-text">0:00</span>
+                <span id="totalTime" class="time-text">Süre</span>
             </div>
         </div>
     </div>
@@ -242,6 +274,18 @@
     <script>
         const userId = "<%= user.id %>";
         let currentTimer = null;
+
+        // Benzersiz Ziyaretçi Sayacı (Farklı tarayıcı/cihaz başına 1 kez sayar)
+        if (!localStorage.getItem('flozzy_visited')) {
+            localStorage.setItem('flozzy_visited', 'true');
+            fetch('/api/increment-view', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('viewCountDisplay').innerText = data.viewCount;
+                    }
+                }).catch(err => console.error("Sayaç hatası:", err));
+        }
 
         function formatTime(ms) {
             const totalSeconds = Math.floor(ms / 1000);
@@ -355,19 +399,49 @@
         fetchLanyard();
         setInterval(fetchLanyard, 5000);
 
-        // Sol tık ile giriş yapma ve videonun sesini açıp başlatma
+        // Click to Enter ve Ses Kontrolleri
         const enterOverlay = document.getElementById('enterOverlay');
         const bgVideo = document.getElementById('bgVideo');
+        const muteBtn = document.getElementById('muteBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
 
         enterOverlay.addEventListener('click', () => {
             enterOverlay.style.opacity = '0';
-            setTimeout(() => {
-                enterOverlay.style.display = 'none';
-            }, 500);
+            setTimeout(() => { enterOverlay.style.display = 'none'; }, 500);
 
             bgVideo.muted = false;
+            bgVideo.volume = volumeSlider.value;
             bgVideo.play().catch(e => console.log("Oynatma hatası:", e));
         });
+
+        volumeSlider.addEventListener('input', (e) => {
+            bgVideo.volume = e.target.value;
+            bgVideo.muted = e.target.value == 0;
+            updateVolumeIcon(bgVideo.volume);
+        });
+
+        muteBtn.addEventListener('click', () => {
+            if (bgVideo.muted || bgVideo.volume == 0) {
+                bgVideo.muted = false;
+                bgVideo.volume = volumeSlider.value > 0 ? volumeSlider.value : 0.5;
+                volumeSlider.value = bgVideo.volume;
+            } else {
+                bgVideo.muted = true;
+                bgVideo.volume = 0;
+                volumeSlider.value = 0;
+            }
+            updateVolumeIcon(bgVideo.volume);
+        });
+
+        function updateVolumeIcon(vol) {
+            if (vol == 0 || bgVideo.muted) {
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            } else if (vol < 0.5) {
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-low"></i>';
+            } else {
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+            }
+        }
     </script>
 </body>
 </html>
