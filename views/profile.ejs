@@ -11,9 +11,8 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title id="pageTitle">
-        Flozzy
-    </title>
+    <title>Flozzy</title>
+
 
     <link
         rel="icon"
@@ -21,973 +20,1666 @@
         href="/ikon.png"
     >
 
+
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     >
 
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
 
 
-    <style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+<style>
 
 
-        body {
+/* =========================================================
+   RESET
+========================================================= */
 
-            color: #ffffff;
+* {
 
-            min-height: 100vh;
+    margin: 0;
 
-            display: flex;
+    padding: 0;
 
-            flex-direction: column;
+    box-sizing: border-box;
 
-            align-items: center;
+    font-family:
+        'Poppins',
+        sans-serif;
 
-            justify-content: center;
+}
 
-            gap: 12px;
 
-            overflow: hidden;
+html,
+body {
 
-            position: relative;
+    width: 100%;
 
-            background-color: #050505;
+    min-height: 100%;
 
-        }
+}
 
 
+body {
 
-        /* =========================
-           BACKGROUND
-        ========================= */
+    min-height: 100vh;
 
-        .bg-video {
+    color: #ffffff;
 
-            position: fixed;
+    background:
+        #050505;
 
-            top: 50%;
+    display: flex;
 
-            left: 50%;
+    flex-direction: column;
 
-            transform: translate(-50%, -50%);
+    align-items: center;
 
-            min-width: 100vw;
+    justify-content: center;
 
-            min-height: 100vh;
+    gap: 10px;
 
-            width: auto;
+    position: relative;
 
-            height: auto;
+    overflow: hidden;
 
-            object-fit: cover;
+}
 
-            z-index: -2;
 
-        }
 
+/* =========================================================
+   DARK BACKGROUND OVERLAY
+========================================================= */
 
+body::after {
 
-        /* =========================
-           ENTER OVERLAY
-        ========================= */
+    content: '';
 
-        #enterOverlay {
+    position: fixed;
 
-            position: fixed;
+    inset: 0;
 
-            top: 0;
+    pointer-events: none;
 
-            left: 0;
+    z-index: -1;
 
-            width: 100vw;
+    background:
 
-            height: 100vh;
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(255,255,255,0.03),
+            transparent 35%
+        ),
 
-            background:
-                rgba(5, 5, 5, 0.92);
+        linear-gradient(
+            180deg,
+            rgba(0,0,0,0.03),
+            rgba(0,0,0,0.24)
+        );
 
-            backdrop-filter:
-                blur(12px);
+}
 
-            -webkit-backdrop-filter:
-                blur(12px);
 
-            z-index: 9999;
 
-            display: flex;
+/* =========================================================
+   BACKGROUND VIDEO
+========================================================= */
 
-            flex-direction: column;
+.bg-video {
 
-            align-items: center;
+    position: fixed;
 
-            justify-content: center;
+    top: 50%;
 
-            cursor: pointer;
+    left: 50%;
 
-            transition:
-                opacity 0.5s ease;
+    transform:
+        translate(-50%, -50%);
 
-        }
+    min-width: 100vw;
 
+    min-height: 100vh;
 
-        .enter-text {
+    width: auto;
 
-            font-size:
-                22px;
+    height: auto;
 
-            font-weight:
-                600;
+    object-fit: cover;
 
-            color:
-                #ffffff;
+    z-index: -3;
 
-            letter-spacing:
-                1px;
+}
 
-            animation:
-                pulseText
-                1.5s
-                infinite
-                alternate;
 
-        }
 
+/* =========================================================
+   ENTER SCREEN
+========================================================= */
 
-        @keyframes pulseText {
+#enterOverlay {
 
-            0% {
-                opacity: 0.4;
-            }
+    position: fixed;
 
-            100% {
-                opacity: 1;
-            }
+    inset: 0;
 
-        }
+    width: 100vw;
 
+    height: 100vh;
 
+    background:
+        rgba(5,5,5,0.90);
 
-        /* =========================
-           AVATAR + DECORATION
-        ========================= */
+    backdrop-filter:
+        blur(15px);
 
-        .avatar-container {
+    -webkit-backdrop-filter:
+        blur(15px);
 
-            --avatar-size: 110px;
+    z-index: 9999;
 
-            /*
-                Burayı değiştirerek
-                Discord çerçevesinin
-                büyüklüğünü ayarlayabilirsin.
-            */
+    display: flex;
 
-            --decoration-size: 132px;
+    align-items: center;
 
-            position: relative;
+    justify-content: center;
 
-            width: 145px;
+    cursor: pointer;
 
-            height: 145px;
+    transition:
+        opacity .5s ease;
 
-            margin-bottom: 5px;
+}
 
-            display: flex;
 
-            align-items: center;
+.enter-text {
 
-            justify-content: center;
+    font-size: 20px;
 
-        }
+    font-weight: 600;
 
+    color:
+        rgba(255,255,255,.92);
 
-        .main-avatar {
+    letter-spacing: 1px;
 
-            position: absolute;
+    animation:
+        enterPulse 1.3s ease-in-out infinite alternate;
 
-            top: 50%;
+}
 
-            left: 50%;
 
-            width:
-                var(--avatar-size);
+@keyframes enterPulse {
 
-            height:
-                var(--avatar-size);
+    from {
 
-            transform:
-                translate(-50%, -50%);
+        opacity: .35;
 
-            border-radius:
-                50%;
+        transform:
+            scale(.98);
 
-            object-fit:
-                cover;
+    }
 
-            z-index:
-                1;
+    to {
 
-        }
+        opacity: 1;
 
+        transform:
+            scale(1);
 
-        .avatar-frame {
+    }
 
-            position: absolute;
+}
 
-            top: 50%;
 
-            left: 50%;
 
-            width:
-                var(--decoration-size);
+/* =========================================================
+   VIEW COUNTER
+========================================================= */
 
-            height:
-                var(--decoration-size);
+.view-counter {
 
-            transform:
-                translate(-50%, -50%);
+    position: fixed;
 
-            object-fit:
-                contain;
+    right: 20px;
 
-            z-index:
-                2;
+    top: 20px;
 
-            pointer-events:
-                none;
+    z-index: 50;
 
-            display:
-                none;
+    padding:
+        8px 14px;
 
-        }
+    border-radius: 15px;
 
+    border:
+        1px solid rgba(255,255,255,.10);
 
+    background:
+        rgba(10,10,14,.35);
 
-        /* =========================
-           USERNAME
-        ========================= */
+    backdrop-filter:
+        blur(16px);
 
-        .glow-username {
+    -webkit-backdrop-filter:
+        blur(16px);
 
-            font-size:
-                36px;
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.25);
 
-            font-weight:
-                800;
+    display: flex;
 
-            color:
-                #ffffff;
+    align-items: center;
 
-            display:
-                flex;
+    gap: 7px;
 
-            align-items:
-                center;
+    font-size: 12px;
 
-            gap:
-                10px;
+    color:
+        rgba(255,255,255,.75);
 
-            text-shadow:
-                0 0 15px rgba(255,255,255,0.8),
-                0 0 30px rgba(255,255,255,0.3);
+}
 
-        }
 
+.view-counter i {
 
+    color:
+        rgba(255,255,255,.65);
 
-        /* =========================
-           BIO
-        ========================= */
+}
 
-        .bio-text {
 
-            font-size:
-                14px;
 
-            color:
-                #cccccc;
+/* =========================================================
+   AUDIO
+========================================================= */
 
-            margin-bottom:
-                8px;
+.audio-control {
 
-            text-align:
-                center;
+    position: fixed;
 
-            max-width:
-                400px;
+    bottom: 20px;
 
-            padding:
-                0 15px;
+    left: 20px;
 
-        }
+    z-index: 50;
 
+    display: flex;
 
+    align-items: center;
 
-        /* =========================
-           DISCORD CARD
-        ========================= */
+    gap: 8px;
 
-        .discord-card {
+    padding:
+        8px 12px;
 
-            background:
-                rgba(18,18,22,0.4);
+    border-radius: 16px;
 
-            border:
-                1px solid rgba(255,255,255,0.1);
+    background:
+        rgba(8,8,12,.35);
 
-            backdrop-filter:
-                blur(18px);
+    border:
+        1px solid rgba(255,255,255,.09);
 
-            -webkit-backdrop-filter:
-                blur(18px);
+    backdrop-filter:
+        blur(16px);
 
-            border-radius:
-                20px;
+    -webkit-backdrop-filter:
+        blur(16px);
 
-            padding:
-                18px 22px;
+}
 
-            width:
-                390px;
 
-            display:
-                flex;
+.audio-control button {
 
-            flex-direction:
-                column;
+    border: 0;
 
-            gap:
-                12px;
+    background: none;
 
-            box-shadow:
-                0 20px 40px rgba(0,0,0,0.5);
+    color: white;
 
-        }
+    cursor: pointer;
 
+    width: 25px;
 
-        .card-top {
+}
 
-            display:
-                flex;
 
-            align-items:
-                center;
+.audio-slider {
 
-            gap:
-                14px;
+    width: 75px;
 
-        }
+    height: 3px;
 
+    cursor: pointer;
 
-        .card-avatar-wrapper {
+    accent-color:
+        #c5b9ff;
 
-            position:
-                relative;
+}
 
-            width:
-                58px;
 
-            height:
-                58px;
 
-            flex-shrink:
-                0;
+/* =========================================================
+   MAIN AVATAR
+========================================================= */
 
-        }
+.avatar-container {
 
+    /*
+        Profil fotoğrafı
+    */
 
-        .card-avatar {
+    --avatar-size:
+        110px;
 
-            width:
-                100%;
 
-            height:
-                100%;
+    /*
+        Discord decoration.
 
-            border-radius:
-                50%;
+        Kanatlı decoration için
+        bu değer güzel oturuyor.
+    */
 
-            object-fit:
-                cover;
+    --decoration-size:
+        138px;
 
-            background-color:
-                #1a1a20;
 
-        }
+    position: relative;
 
+    width: 150px;
 
-        .status-dot {
+    height: 150px;
 
-            width:
-                15px;
+    display: flex;
 
-            height:
-                15px;
+    align-items: center;
 
-            border-radius:
-                50%;
+    justify-content: center;
 
-            position:
-                absolute;
+    flex-shrink: 0;
 
-            bottom:
-                0;
+}
 
-            right:
-                0;
 
-            border:
-                3px solid #0f0f12;
+.main-avatar {
 
-            background-color:
-                #747f8d;
+    position: absolute;
 
-        }
+    top: 50%;
 
+    left: 50%;
 
-        .card-user-info {
+    width:
+        var(--avatar-size);
 
-            display:
-                flex;
+    height:
+        var(--avatar-size);
 
-            flex-direction:
-                column;
+    transform:
+        translate(-50%, -50%);
 
-        }
+    border-radius: 50%;
 
+    object-fit: cover;
 
-        .card-username {
+    z-index: 1;
 
-            font-size:
-                17px;
+    box-shadow:
 
-            font-weight:
-                700;
+        0 0 0 1px
+        rgba(255,255,255,.10),
 
-            color:
-                #ffffff;
+        0 15px 40px
+        rgba(0,0,0,.25);
 
-        }
+}
 
 
-        .card-status-text {
+.avatar-frame {
 
-            font-size:
-                13px;
+    position: absolute;
 
-            color:
-                #b0b0b0;
+    top: 50%;
 
-            font-style:
-                italic;
+    left: 50%;
 
-        }
+    width:
+        var(--decoration-size);
 
+    height:
+        var(--decoration-size);
 
+    transform:
+        translate(-50%, -50%);
 
-        /* =========================
-           ACTIVITY
-        ========================= */
+    object-fit: contain;
 
-        .activity-box {
+    pointer-events: none;
 
-            display:
-                none;
+    z-index: 2;
 
-            background:
-                rgba(18,18,22,0.35);
+    display: none;
 
-            border:
-                1px solid rgba(255,255,255,0.08);
+}
 
-            backdrop-filter:
-                blur(10px);
 
-            -webkit-backdrop-filter:
-                blur(10px);
 
-            border-radius:
-                14px;
+/* =========================================================
+   MAIN USERNAME
+========================================================= */
 
-            padding:
-                12px;
+.glow-username {
 
-            flex-direction:
-                column;
+    font-size: 34px;
 
-            gap:
-                8px;
+    line-height: 1;
 
-        }
+    font-weight: 800;
 
+    margin-top: 0px;
 
-        .activity-header {
+    text-shadow:
 
-            font-size:
-                11px;
+        0 0 12px
+        rgba(255,255,255,.68),
 
-            font-weight:
-                700;
+        0 0 30px
+        rgba(255,255,255,.20);
 
-            color:
-                #a0a0a5;
+}
 
-            letter-spacing:
-                0.5px;
 
-            margin-bottom:
-                2px;
+.bio-text {
 
-        }
+    font-size: 13px;
 
+    color:
+        rgba(255,255,255,.74);
 
-        .activity-main {
+    text-align: center;
 
-            display:
-                flex;
+    max-width: 410px;
 
-            align-items:
-                center;
+    padding:
+        0 12px;
 
-            gap:
-                12px;
+    margin:
+        5px 0 7px;
 
-            width:
-                100%;
+}
 
-        }
 
 
-        .activity-album {
+/* =========================================================
+   DISCORD CARD
+========================================================= */
 
-            width:
-                50px;
+.discord-card {
 
-            height:
-                50px;
+    width: 390px;
 
-            border-radius:
-                10px;
+    max-width:
+        calc(100vw - 30px);
 
-            object-fit:
-                cover;
 
-            flex-shrink:
-                0;
+    /*
+        Öncekinden daha saydam.
+    */
 
-        }
+    background:
 
+        linear-gradient(
+            135deg,
+            rgba(10,10,14,.36),
+            rgba(35,35,42,.22)
+        );
 
-        .activity-details {
 
-            display:
-                flex;
+    border:
+        1px solid
+        rgba(255,255,255,.10);
 
-            flex-direction:
-                column;
 
-            overflow:
-                hidden;
+    backdrop-filter:
+        blur(18px)
+        saturate(125%);
 
-            width:
-                100%;
 
-        }
+    -webkit-backdrop-filter:
+        blur(18px)
+        saturate(125%);
 
 
-        .activity-title {
+    border-radius: 22px;
 
-            font-size:
-                13px;
 
-            font-weight:
-                700;
+    padding:
+        17px;
 
-            color:
-                #ffffff;
 
-            white-space:
-                nowrap;
+    box-shadow:
 
-            overflow:
-                hidden;
+        0 18px 50px
+        rgba(0,0,0,.32),
 
-            text-overflow:
-                ellipsis;
+        inset 0 1px 0
+        rgba(255,255,255,.04);
 
-        }
 
+    position: relative;
 
-        .activity-sub {
+    overflow: hidden;
 
-            font-size:
-                12px;
+}
 
-            color:
-                #b3b3b3;
 
-            white-space:
-                nowrap;
 
-            overflow:
-                hidden;
+/* light glare */
 
-            text-overflow:
-                ellipsis;
+.discord-card::before {
 
-        }
+    content: '';
 
+    position: absolute;
 
+    width: 190px;
 
-        /* =========================
-           PROGRESS BAR
-        ========================= */
+    height: 190px;
 
-        .progress-container {
+    right: -80px;
 
-            width:
-                100%;
+    top: -100px;
 
-            display:
-                flex;
+    pointer-events: none;
 
-            align-items:
-                center;
+    background:
 
-            gap:
-                8px;
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.10),
+            transparent 67%
+        );
 
-            margin-top:
-                4px;
+}
 
-        }
 
 
-        .time-text {
+/* =========================================================
+   DISCORD CARD TOP
+========================================================= */
 
-            font-size:
-                11px;
+.card-top {
 
-            color:
-                #888888;
+    display: flex;
 
-            font-family:
-                monospace;
+    align-items: center;
 
-            white-space:
-                nowrap;
+    gap: 13px;
 
-        }
+    position: relative;
 
+    z-index: 2;
 
-        .bar-bg {
+}
 
-            flex-grow:
-                1;
 
-            height:
-                5px;
+.card-avatar-wrapper {
 
-            background:
-                rgba(255,255,255,0.1);
+    position: relative;
 
-            border-radius:
-                3px;
+    width: 60px;
 
-            overflow:
-                hidden;
+    height: 60px;
 
-        }
+    flex-shrink: 0;
 
+}
 
-        .bar-fill {
 
-            height:
-                100%;
+.card-avatar {
 
-            background:
-                #43b581;
+    width: 100%;
 
-            width:
-                0%;
+    height: 100%;
 
-            transition:
-                width 0.3s linear;
+    border-radius: 50%;
 
-            border-radius:
-                3px;
+    object-fit: cover;
 
-        }
+    border:
+        1px solid
+        rgba(255,255,255,.08);
 
+}
 
 
-        /* =========================
-           SOCIALS
-        ========================= */
+.status-dot {
 
-        .socials {
+    position: absolute;
 
-            display:
-                flex;
+    bottom: 1px;
 
-            gap:
-                20px;
+    right: 0px;
 
-            margin-top:
-                8px;
+    width: 14px;
 
-        }
+    height: 14px;
 
+    border-radius: 50%;
 
-        .socials a {
+    border:
+        3px solid
+        rgba(17,17,21,.95);
 
-            color:
-                #ffffff;
+    background:
+        #747f8d;
 
-            font-size:
-                24px;
+    box-shadow:
+        0 0 8px
+        rgba(0,0,0,.5);
 
-            text-decoration:
-                none;
+}
 
-            filter:
-                drop-shadow(
-                    0 0 8px
-                    rgba(255,255,255,0.6)
-                );
 
-            transition:
-                transform 0.2s;
+.card-user-content {
 
-        }
+    min-width: 0;
 
+    flex: 1;
 
-        .socials a:hover {
+}
 
-            transform:
-                scale(1.15);
 
-        }
+.card-user-info {
 
+    display: flex;
 
+    flex-direction: column;
 
-        /* =========================
-           VIEW COUNTER
-        ========================= */
+    min-width: 0;
 
-        .view-counter {
+}
 
-            position:
-                absolute;
 
-            top:
-                20px;
+.card-username {
 
-            right:
-                20px;
+    font-size: 16px;
 
-            background:
-                rgba(18,18,22,0.65);
+    font-weight: 700;
 
-            border:
-                1px solid rgba(255,255,255,0.1);
+    color: #fff;
 
-            backdrop-filter:
-                blur(12px);
+    white-space: nowrap;
 
-            -webkit-backdrop-filter:
-                blur(12px);
+    overflow: hidden;
 
-            color:
-                #fff;
+    text-overflow: ellipsis;
 
-            padding:
-                8px 18px;
+}
 
-            border-radius:
-                30px;
 
-            font-size:
-                13px;
+.card-status-text {
 
-            display:
-                flex;
+    margin-top: 1px;
 
-            flex-direction:
-                column;
+    font-size: 12px;
 
-            align-items:
-                center;
+    color:
+        rgba(255,255,255,.55);
 
-            gap:
-                2px;
+    font-style: italic;
 
-            box-shadow:
-                0 8px 20px rgba(0,0,0,0.5);
+    white-space: nowrap;
 
-            z-index:
-                10;
+    overflow: hidden;
 
-        }
+    text-overflow: ellipsis;
 
+}
 
-        .view-counter span:first-child {
 
-            font-size:
-                9px;
 
-            color:
-                #999;
+/* =========================================================
+   DISCORD BADGES
+========================================================= */
 
-            text-transform:
-                uppercase;
+.discord-badges {
 
-            font-weight:
-                600;
+    margin-top: 7px;
 
-            letter-spacing:
-                0.5px;
+    display: flex;
 
-        }
+    align-items: center;
 
+    flex-wrap: wrap;
 
-        .view-counter-inner {
+    gap: 5px;
 
-            display:
-                flex;
+}
 
-            align-items:
-                center;
 
-            gap:
-                6px;
+.discord-badges:empty {
 
-            font-weight:
-                700;
+    display: none;
 
-        }
+}
 
 
-        .view-counter-inner i {
+.discord-badge {
 
-            color:
-                #ccc;
+    --badge-color:
+        #c7c7ff;
 
-            font-size:
-                12px;
 
-        }
+    width: 22px;
 
+    height: 22px;
 
+    position: relative;
 
-        /* =========================
-           AUDIO
-        ========================= */
+    border-radius: 7px;
 
-        .audio-control {
+    display: inline-flex;
 
-            position:
-                absolute;
+    align-items: center;
 
-            bottom:
-                20px;
+    justify-content: center;
 
-            left:
-                20px;
+    color:
+        var(--badge-color);
 
-            background:
-                rgba(18,18,22,0.65);
+    background:
 
-            border:
-                1px solid rgba(255,255,255,0.1);
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.095),
+            rgba(255,255,255,.025)
+        );
 
-            backdrop-filter:
-                blur(12px);
+    border:
 
-            -webkit-backdrop-filter:
-                blur(12px);
+        1px solid
+        color-mix(
+            in srgb,
+            var(--badge-color) 28%,
+            transparent
+        );
 
-            padding:
-                8px 14px;
 
-            border-radius:
-                30px;
+    box-shadow:
 
-            display:
-                flex;
+        inset 0 1px 0
+        rgba(255,255,255,.07),
 
-            align-items:
-                center;
+        0 3px 10px
+        rgba(0,0,0,.13);
 
-            gap:
-                10px;
 
-            z-index:
-                10;
+    font-size: 11px;
 
-            box-shadow:
-                0 8px 20px rgba(0,0,0,0.4);
 
-        }
+    transition:
 
+        transform .18s ease,
 
-        .audio-control button {
+        background .18s ease;
 
-            background:
-                none;
+}
 
-            border:
-                none;
 
-            color:
-                #fff;
+.discord-badge:hover {
 
-            cursor:
-                pointer;
+    transform:
+        translateY(-2px)
+        scale(1.06);
 
-            font-size:
-                14px;
+    background:
+        rgba(255,255,255,.10);
 
-        }
+}
 
 
-        .audio-slider {
+.discord-badge::after {
 
-            width:
-                70px;
+    content:
+        attr(data-name);
 
-            accent-color:
-                #ffffff;
+    position: absolute;
 
-            cursor:
-                pointer;
+    left: 50%;
 
-            height:
-                4px;
+    bottom:
+        calc(100% + 7px);
 
-        }
+    transform:
+        translateX(-50%);
 
+    white-space: nowrap;
 
-    </style>
+    pointer-events: none;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    font-size: 10px;
+
+    color: #fff;
+
+    padding:
+        5px 8px;
+
+    border-radius: 7px;
+
+    background:
+        rgba(10,10,13,.96);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    transition:
+        opacity .15s ease;
+
+}
+
+
+.discord-badge:hover::after {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+
+/* =========================================================
+   ACTIVITY
+========================================================= */
+
+.activity-box {
+
+    display: none;
+
+    margin-top: 14px;
+
+    padding: 13px;
+
+    border-radius: 17px;
+
+
+    /*
+        İç kart da daha saydam.
+    */
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(7,7,11,.42),
+            rgba(25,25,32,.27)
+        );
+
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+
+    box-shadow:
+
+        inset 0 1px 0
+        rgba(255,255,255,.025);
+
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+.activity-box::after {
+
+    content: '';
+
+    position: absolute;
+
+    left: -60px;
+
+    top: -100px;
+
+    width: 180px;
+
+    height: 180px;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(151,131,255,.07),
+            transparent 70%
+        );
+
+}
+
+
+
+/* activity heading */
+
+.activity-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    position: relative;
+
+    z-index: 2;
+
+    margin-bottom: 10px;
+
+}
+
+
+.activity-header {
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    color:
+        rgba(255,255,255,.62);
+
+}
+
+
+.activity-live {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: 9px;
+
+    color:
+        rgba(255,255,255,.43);
+
+}
+
+
+.activity-live-dot {
+
+    width: 5px;
+
+    height: 5px;
+
+    border-radius: 50%;
+
+    background:
+        #b8a7ff;
+
+    box-shadow:
+        0 0 8px
+        #b8a7ff;
+
+    animation:
+        livePulse 1.5s ease-in-out infinite;
+
+}
+
+
+@keyframes livePulse {
+
+    0%,
+    100% {
+
+        opacity: .4;
+
+        transform:
+            scale(.8);
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+        transform:
+            scale(1.25);
+
+    }
+
+}
+
+
+
+/* =========================================================
+   ACTIVITY BODY
+========================================================= */
+
+.activity-main {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+.activity-cover {
+
+    width: 51px;
+
+    height: 51px;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    overflow: hidden;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(30,30,38,.9),
+            rgba(12,12,16,.95)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color:
+        rgba(255,255,255,.80);
+
+    font-size: 20px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0,0,0,.18);
+
+}
+
+
+.activity-album {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: none;
+
+}
+
+
+.activity-fallback {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.activity-details {
+
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.activity-title {
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color:
+        rgba(255,255,255,.97);
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+}
+
+
+.activity-sub {
+
+    margin-top: 1px;
+
+    font-size: 11px;
+
+    color:
+        rgba(255,255,255,.53);
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+}
+
+
+.activity-state {
+
+    margin-top: 2px;
+
+    font-size: 10px;
+
+    color:
+        rgba(255,255,255,.36);
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+}
+
+
+
+/* =========================================================
+   ACTIVITY TIME AREA
+========================================================= */
+
+.progress-container {
+
+    display: none;
+
+    align-items: center;
+
+    gap: 9px;
+
+    width: 100%;
+
+    margin-top: 12px;
+
+    position: relative;
+
+    z-index: 3;
+
+}
+
+
+.time-chip {
+
+    min-width: 53px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: 10px;
+
+    color:
+        rgba(255,255,255,.57);
+
+    white-space: nowrap;
+
+}
+
+
+.time-chip i {
+
+    font-size: 9px;
+
+    color:
+        #b7a5ff;
+
+}
+
+
+
+/* =========================================================
+   NEW BEAUTIFUL PROGRESS
+========================================================= */
+
+.bar-bg {
+
+    position: relative;
+
+    flex: 1;
+
+    height: 5px;
+
+    min-width: 50px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.075);
+
+    box-shadow:
+        inset 0 0 5px
+        rgba(0,0,0,.20);
+
+}
+
+
+.bar-fill {
+
+    position: relative;
+
+    width: 0%;
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #947cff,
+            #6e9eff,
+            #c77dff,
+            #ff8fd4
+        );
+
+    background-size:
+        200% 100%;
+
+    box-shadow:
+
+        0 0 8px
+        rgba(157,131,255,.45);
+
+    transition:
+        width .5s linear;
+
+    animation:
+        gradientMove 3s linear infinite;
+
+}
+
+
+.bar-fill::after {
+
+    content: '';
+
+    position: absolute;
+
+    right: -2px;
+
+    top: 50%;
+
+    width: 7px;
+
+    height: 7px;
+
+    transform:
+        translateY(-50%);
+
+    border-radius: 50%;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+
+        0 0 5px #fff,
+
+        0 0 10px
+        rgba(183,163,255,.8);
+
+}
+
+
+@keyframes gradientMove {
+
+    from {
+
+        background-position:
+            0% 50%;
+
+    }
+
+    to {
+
+        background-position:
+            200% 50%;
+
+    }
+
+}
+
+
+
+/* =========================================================
+   GAME SESSION LINE
+========================================================= */
+
+.game-session-line {
+
+    position: relative;
+
+    flex: 1;
+
+    height: 5px;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+.game-session-line::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 45%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(139,124,255,.28),
+            rgba(115,183,255,.76),
+            rgba(215,138,255,.70),
+            transparent
+        );
+
+    filter:
+        blur(.2px);
+
+    animation:
+        gameLine 2.3s ease-in-out infinite;
+
+}
+
+
+.game-session-line::after {
+
+    content: '';
+
+    position: absolute;
+
+    top: 50%;
+
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #d8ceff;
+
+    box-shadow:
+
+        0 0 7px
+        #b7a5ff,
+
+        0 0 12px
+        rgba(135,169,255,.50);
+
+    transform:
+        translateY(-50%);
+
+    animation:
+        gameDot 2.3s ease-in-out infinite;
+
+}
+
+
+@keyframes gameLine {
+
+    0% {
+
+        transform:
+            translateX(-120%);
+
+    }
+
+    100% {
+
+        transform:
+            translateX(330%);
+
+    }
+
+}
+
+
+@keyframes gameDot {
+
+    0% {
+
+        left: -3%;
+
+        opacity: .1;
+
+    }
+
+    15% {
+
+        opacity: 1;
+
+    }
+
+    85% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        left: 102%;
+
+        opacity: .1;
+
+    }
+
+}
+
+
+.activity-end-label {
+
+    font-size: 9px;
+
+    color:
+        rgba(255,255,255,.35);
+
+    white-space: nowrap;
+
+}
+
+
+
+/* =========================================================
+   SOCIALS
+========================================================= */
+
+.socials {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-top: 5px;
+
+}
+
+
+.socials a {
+
+    color:
+        rgba(255,255,255,.88);
+
+    text-decoration: none;
+
+    font-size: 21px;
+
+    transition:
+
+        transform .2s ease,
+
+        color .2s ease,
+
+        filter .2s ease;
+
+}
+
+
+.socials a:hover {
+
+    transform:
+        translateY(-2px)
+        scale(1.08);
+
+    color: #fff;
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(255,255,255,.40)
+        );
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (
+    max-width: 520px
+) {
+
+    body {
+
+        justify-content: center;
+
+        padding:
+            15px;
+
+    }
+
+
+    .discord-card {
+
+        width: 100%;
+
+        max-width: 390px;
+
+    }
+
+
+    .view-counter {
+
+        right: 12px;
+
+        top: 12px;
+
+    }
+
+
+    .audio-control {
+
+        bottom: 12px;
+
+        left: 12px;
+
+    }
+
+
+    .avatar-container {
+
+        --avatar-size:
+            108px;
+
+        --decoration-size:
+            135px;
+
+    }
+
+
+    .glow-username {
+
+        font-size:
+            31px;
+
+    }
+
+}
+
+
+</style>
 
 </head>
+
 
 
 <body>
 
 
 
-<!-- ENTER -->
+<!-- =====================================================
+     CLICK TO ENTER
+===================================================== -->
 
 <div id="enterOverlay">
 
@@ -1001,31 +1693,27 @@
 
 
 
-<!-- VIEW COUNTER -->
+<!-- =====================================================
+     PROFILE VIEWS
+===================================================== -->
 
 <div class="view-counter">
 
-    <span>
-        Profile Views
+    <i class="fa-regular fa-eye"></i>
+
+    <span id="viewCountDisplay">
+
+        <%= settings.viewCount %>
+
     </span>
-
-    <div class="view-counter-inner">
-
-        <i class="fa-solid fa-eye"></i>
-
-        <span id="viewCountDisplay">
-
-            <%= settings.viewCount %>
-
-        </span>
-
-    </div>
 
 </div>
 
 
 
-<!-- BACKGROUND VIDEO -->
+<!-- =====================================================
+     BACKGROUND VIDEO
+===================================================== -->
 
 <video
     id="bgVideo"
@@ -1044,7 +1732,9 @@
 
 
 
-<!-- AUDIO -->
+<!-- =====================================================
+     AUDIO
+===================================================== -->
 
 <div class="audio-control">
 
@@ -1053,6 +1743,7 @@
         <i class="fa-solid fa-volume-high"></i>
 
     </button>
+
 
     <input
         type="range"
@@ -1068,7 +1759,9 @@
 
 
 
-<!-- AVATAR -->
+<!-- =====================================================
+     MAIN AVATAR
+===================================================== -->
 
 <div class="avatar-container">
 
@@ -1076,7 +1769,7 @@
     <img
         id="mainAvatar"
         class="main-avatar"
-        src="https://cdn.discordapp.com/embed/avatars/0.png"
+        src="<%= user.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png' %>"
         alt="Avatar"
     >
 
@@ -1087,7 +1780,6 @@
         src="<%= user.avatar_decoration_url || '' %>"
         alt=""
         style="<%= user.avatar_decoration_url ? 'display:block;' : 'display:none;' %>"
-        onload="this.style.display='block'"
         onerror="this.style.display='none'"
     >
 
@@ -1096,21 +1788,21 @@
 
 
 
-<!-- USERNAME -->
+<!-- =====================================================
+     MAIN NAME
+===================================================== -->
 
 <div class="glow-username">
 
-    <span>
-
-        <%= user.global_name || user.username %>
-
-    </span>
+    <%= user.global_name || user.username %>
 
 </div>
 
 
 
-<!-- BIO -->
+<!-- =====================================================
+     BIO
+===================================================== -->
 
 <div class="bio-text">
 
@@ -1120,10 +1812,14 @@
 
 
 
-<!-- DISCORD CARD -->
+<!-- =====================================================
+     DISCORD CARD
+===================================================== -->
 
 <div class="discord-card">
 
+
+    <!-- TOP -->
 
     <div class="card-top">
 
@@ -1134,7 +1830,7 @@
             <img
                 id="cardAvatar"
                 class="card-avatar"
-                src="https://cdn.discordapp.com/embed/avatars/0.png"
+                src="<%= user.avatar_url || 'https://cdn.discordapp.com/embed/avatars/0.png' %>"
                 alt="Avatar"
             >
 
@@ -1149,24 +1845,42 @@
 
 
 
-        <div class="card-user-info">
+        <div class="card-user-content">
 
 
-            <span class="card-username">
-
-                <%= user.username %>
-
-            </span>
+            <div class="card-user-info">
 
 
-            <span
-                id="customStatus"
-                class="card-status-text"
-            >
+                <span
+                    id="cardUsername"
+                    class="card-username"
+                >
 
-                Yükleniyor...
+                    <%= user.username %>
 
-            </span>
+                </span>
+
+
+                <span
+                    id="customStatus"
+                    class="card-status-text"
+                >
+
+                    Yükleniyor...
+
+                </span>
+
+
+            </div>
+
+
+
+            <!-- DISCORD BADGES -->
+
+            <div
+                id="discordBadges"
+                class="discord-badges"
+            ></div>
 
 
         </div>
@@ -1176,7 +1890,9 @@
 
 
 
-    <!-- ACTIVITY -->
+    <!-- =================================================
+         ACTIVITY
+    ================================================= -->
 
     <div
         id="activityBox"
@@ -1184,12 +1900,33 @@
     >
 
 
-        <div
-            id="activityHeader"
-            class="activity-header"
-        >
+        <div class="activity-heading">
 
-            Aktivite
+
+            <div
+                id="activityHeader"
+                class="activity-header"
+            >
+
+                OYNUYOR
+
+            </div>
+
+
+            <div class="activity-live">
+
+                <div
+                    class="activity-live-dot"
+                ></div>
+
+                <span id="activityLiveText">
+
+                    Aktif
+
+                </span>
+
+            </div>
+
 
         </div>
 
@@ -1198,13 +1935,34 @@
         <div class="activity-main">
 
 
-            <img
-                id="activityImg"
-                class="activity-album"
-                src=""
-                alt="Art"
-            >
+            <!-- COVER -->
 
+            <div class="activity-cover">
+
+
+                <img
+                    id="activityImg"
+                    class="activity-album"
+                    src=""
+                    alt=""
+                >
+
+
+                <div
+                    id="activityFallback"
+                    class="activity-fallback"
+                >
+
+                    <i class="fa-solid fa-gamepad"></i>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- TEXT -->
 
             <div class="activity-details">
 
@@ -1229,6 +1987,12 @@
                 </span>
 
 
+                <span
+                    id="activityState"
+                    class="activity-state"
+                ></span>
+
+
             </div>
 
 
@@ -1236,24 +2000,38 @@
 
 
 
+        <!-- PROGRESS / SESSION -->
+
         <div
             id="progressContainer"
             class="progress-container"
-            style="display:none;"
         >
 
 
             <span
                 id="currentTime"
-                class="time-text"
+                class="time-chip"
             >
 
-                0:00
+                <i class="fa-regular fa-clock"></i>
+
+                <span id="currentTimeText">
+
+                    0:00
+
+                </span>
 
             </span>
 
 
-            <div class="bar-bg">
+
+            <!-- SPOTIFY BAR -->
+
+            <div
+                id="spotifyBar"
+                class="bar-bg"
+                style="display:none;"
+            >
 
                 <div
                     id="barFill"
@@ -1263,9 +2041,20 @@
             </div>
 
 
+
+            <!-- GAME ANIMATION -->
+
+            <div
+                id="gameSessionLine"
+                class="game-session-line"
+                style="display:none;"
+            ></div>
+
+
+
             <span
                 id="totalTime"
-                class="time-text"
+                class="activity-end-label"
             >
 
                 Süre
@@ -1283,7 +2072,9 @@
 
 
 
-<!-- SOCIALS -->
+<!-- =====================================================
+     SOCIALS
+===================================================== -->
 
 <div class="socials">
 
@@ -1291,6 +2082,7 @@
     <a
         href="https://discord.com/users/<%= user.id %>"
         target="_blank"
+        title="Discord"
     >
 
         <i class="fa-brands fa-discord"></i>
@@ -1301,6 +2093,7 @@
     <a
         href="https://tiktok.com"
         target="_blank"
+        title="TikTok"
     >
 
         <i class="fa-brands fa-tiktok"></i>
@@ -1315,12 +2108,22 @@
 <script>
 
 
-/* =============================
-   TITLE
-============================= */
+/* =========================================================
+   USER ID
+========================================================= */
+
+const userId =
+    "<%= user.id %>";
+
+
+
+/* =========================================================
+   TITLE ANIMATION
+========================================================= */
 
 let titleText =
     "Flozzy • ";
+
 
 let titleIndex =
     0;
@@ -1330,8 +2133,12 @@ function marqueeTitle() {
 
     document.title =
 
-        titleText.substring(titleIndex)
+        titleText.substring(
+            titleIndex
+        )
+
         +
+
         titleText.substring(
             0,
             titleIndex
@@ -1339,8 +2146,13 @@ function marqueeTitle() {
 
 
     titleIndex =
-        (titleIndex + 1)
+
+        (
+            titleIndex + 1
+        )
+
         %
+
         titleText.length;
 
 }
@@ -1353,29 +2165,15 @@ setInterval(
 
 
 
-/* =============================
-   USER
-============================= */
-
-const userId =
-    "<%= user.id %>";
-
-
-let currentTimer =
-    null;
-
-
-
-/* =============================
+/* =========================================================
    VIEW COUNTER
-============================= */
+========================================================= */
 
 if (
     !localStorage.getItem(
         'flozzy_visited'
     )
 ) {
-
 
     localStorage.setItem(
         'flozzy_visited',
@@ -1386,19 +2184,19 @@ if (
     fetch(
         '/api/increment-view',
         {
-            method: 'POST'
+            method:
+                'POST'
         }
     )
 
     .then(
-        res => res.json()
+        response =>
+            response.json()
     )
 
     .then(data => {
 
-
         if (data.success) {
-
 
             document
                 .getElementById(
@@ -1407,33 +2205,37 @@ if (
                 .innerText =
                     data.viewCount;
 
-
         }
-
 
     })
 
-    .catch(err => {
-
+    .catch(error => {
 
         console.error(
-            "Sayaç hatası:",
-            err
+            'Sayaç hatası:',
+            error
         );
 
-
     });
-
 
 }
 
 
 
-/* =============================
+/* =========================================================
    TIME FORMAT
-============================= */
+========================================================= */
 
 function formatTime(ms) {
+
+    if (
+        !Number.isFinite(ms) ||
+        ms < 0
+    ) {
+
+        ms = 0;
+
+    }
 
 
     const totalSeconds =
@@ -1442,9 +2244,18 @@ function formatTime(ms) {
         );
 
 
+    const hours =
+        Math.floor(
+            totalSeconds / 3600
+        );
+
+
     const minutes =
         Math.floor(
-            totalSeconds / 60
+            (
+                totalSeconds % 3600
+            )
+            / 60
         );
 
 
@@ -1452,24 +2263,563 @@ function formatTime(ms) {
         totalSeconds % 60;
 
 
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    if (hours > 0) {
 
+        return (
+
+            `${hours}:`
+
+            +
+
+            `${minutes
+                .toString()
+                .padStart(2, '0')}:`
+
+            +
+
+            `${seconds
+                .toString()
+                .padStart(2, '0')}`
+
+        );
+
+    }
+
+
+    return (
+
+        `${minutes}:`
+
+        +
+
+        `${seconds
+            .toString()
+            .padStart(2, '0')}`
+
+    );
 
 }
 
 
 
-/* =============================
+/* =========================================================
+   DISCORD BADGES
+========================================================= */
+
+/*
+    Discord public_flags.
+
+    Nitro gibi bazı profil rozetleri
+    public_flags içinde bulunmaz.
+
+    Bu yüzden API'den gerçekten gelen
+    rozetleri gösteriyoruz.
+*/
+
+const badgeDefinitions = [
+
+    {
+
+        bit: 1 << 0,
+
+        name:
+            'Discord Staff',
+
+        icon:
+            'fa-solid fa-hammer',
+
+        color:
+            '#ff6c75'
+
+    },
+
+
+    {
+
+        bit: 1 << 1,
+
+        name:
+            'Partner',
+
+        icon:
+            'fa-solid fa-handshake',
+
+        color:
+            '#8ea1e1'
+
+    },
+
+
+    {
+
+        bit: 1 << 2,
+
+        name:
+            'HypeSquad Events',
+
+        icon:
+            'fa-solid fa-bolt',
+
+        color:
+            '#f47fff'
+
+    },
+
+
+    {
+
+        bit: 1 << 3,
+
+        name:
+            'Bug Hunter',
+
+        icon:
+            'fa-solid fa-bug',
+
+        color:
+            '#56d89c'
+
+    },
+
+
+    {
+
+        bit: 1 << 6,
+
+        name:
+            'HypeSquad Bravery',
+
+        icon:
+            'fa-solid fa-diamond',
+
+        color:
+            '#9c84ff'
+
+    },
+
+
+    {
+
+        bit: 1 << 7,
+
+        name:
+            'HypeSquad Brilliance',
+
+        icon:
+            'fa-solid fa-gem',
+
+        color:
+            '#f47fff'
+
+    },
+
+
+    {
+
+        bit: 1 << 8,
+
+        name:
+            'HypeSquad Balance',
+
+        icon:
+            'fa-solid fa-scale-balanced',
+
+        color:
+            '#45c6b8'
+
+    },
+
+
+    {
+
+        bit: 1 << 9,
+
+        name:
+            'Early Supporter',
+
+        icon:
+            'fa-solid fa-heart',
+
+        color:
+            '#f3a45c'
+
+    },
+
+
+    {
+
+        bit: 1 << 14,
+
+        name:
+            'Bug Hunter Gold',
+
+        icon:
+            'fa-solid fa-bug',
+
+        color:
+            '#f6c453'
+
+    },
+
+
+    {
+
+        bit: 1 << 17,
+
+        name:
+            'Early Verified Bot Developer',
+
+        icon:
+            'fa-solid fa-code',
+
+        color:
+            '#7289da'
+
+    },
+
+
+    {
+
+        bit: 1 << 18,
+
+        name:
+            'Discord Moderator',
+
+        icon:
+            'fa-solid fa-shield-halved',
+
+        color:
+            '#64d6c4'
+
+    },
+
+
+    {
+
+        bit: 1 << 22,
+
+        name:
+            'Active Developer',
+
+        icon:
+            'fa-solid fa-terminal',
+
+        color:
+            '#697cff'
+
+    }
+
+];
+
+
+
+function renderBadges(
+    publicFlags,
+    hasDecoration
+) {
+
+    const holder =
+
+        document.getElementById(
+            'discordBadges'
+        );
+
+
+    holder.innerHTML =
+        '';
+
+
+    publicFlags =
+        Number(
+            publicFlags || 0
+        );
+
+
+    badgeDefinitions
+        .forEach(badge => {
+
+            if (
+                (
+                    publicFlags &
+                    badge.bit
+                )
+                !== 0
+            ) {
+
+                const element =
+                    document.createElement(
+                        'span'
+                    );
+
+
+                element.className =
+                    'discord-badge';
+
+
+                element.dataset.name =
+                    badge.name;
+
+
+                element.style
+                    .setProperty(
+                        '--badge-color',
+                        badge.color
+                    );
+
+
+                element.innerHTML =
+                    `<i class="${badge.icon}"></i>`;
+
+
+                holder.appendChild(
+                    element
+                );
+
+            }
+
+        });
+
+
+
+    /*
+        Avatar decoration varsa
+        küçük kozmetik rozeti.
+    */
+
+    if (hasDecoration) {
+
+        const decorationBadge =
+            document.createElement(
+                'span'
+            );
+
+
+        decorationBadge.className =
+            'discord-badge';
+
+
+        decorationBadge.dataset.name =
+            'Avatar Decoration';
+
+
+        decorationBadge.style
+            .setProperty(
+                '--badge-color',
+                '#c9a6ff'
+            );
+
+
+        decorationBadge.innerHTML =
+
+            '<i class="fa-solid fa-wand-magic-sparkles"></i>';
+
+
+        holder.appendChild(
+            decorationBadge
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   ACTIVITY IMAGE
+========================================================= */
+
+function setActivityImage(
+    url,
+    fallbackIcon = 'fa-solid fa-gamepad'
+) {
+
+    const img =
+
+        document.getElementById(
+            'activityImg'
+        );
+
+
+    const fallback =
+
+        document.getElementById(
+            'activityFallback'
+        );
+
+
+    fallback.innerHTML =
+
+        `<i class="${fallbackIcon}"></i>`;
+
+
+    if (!url) {
+
+        img.style.display =
+            'none';
+
+
+        fallback.style.display =
+            'flex';
+
+
+        img.removeAttribute(
+            'src'
+        );
+
+
+        return;
+    }
+
+
+    img.onload =
+        () => {
+
+            img.style.display =
+                'block';
+
+
+            fallback.style.display =
+                'none';
+
+        };
+
+
+    img.onerror =
+        () => {
+
+            img.style.display =
+                'none';
+
+
+            fallback.style.display =
+                'flex';
+
+        };
+
+
+    img.src =
+        url;
+
+}
+
+
+
+/* =========================================================
+   ACTIVITY ASSET RESOLVER
+========================================================= */
+
+function resolveActivityAsset(
+    activity
+) {
+
+    if (
+        !activity ||
+        !activity.assets ||
+        !activity.assets.large_image
+    ) {
+
+        return null;
+
+    }
+
+
+    const image =
+        activity.assets.large_image;
+
+
+    /*
+        mp:
+    */
+
+    if (
+        image.startsWith(
+            'mp:'
+        )
+    ) {
+
+        return (
+
+            'https://media.discordapp.net/'
+
+            +
+
+            image.substring(3)
+
+        );
+
+    }
+
+
+    /*
+        spotify:
+    */
+
+    if (
+        image.startsWith(
+            'spotify:'
+        )
+    ) {
+
+        return (
+
+            'https://i.scdn.co/image/'
+
+            +
+
+            image.substring(
+                'spotify:'.length
+            )
+
+        );
+
+    }
+
+
+    /*
+        application asset
+    */
+
+    if (
+        activity.application_id
+    ) {
+
+        return (
+
+            `https://cdn.discordapp.com/app-assets/`
+
+            +
+
+            `${activity.application_id}/`
+
+            +
+
+            `${image}.png`
+
+        );
+
+    }
+
+
+    return null;
+
+}
+
+
+
+/* =========================================================
    LANYARD
-============================= */
+========================================================= */
+
+let currentTimer =
+    null;
+
+
 
 async function fetchLanyard() {
 
-
     try {
 
-
-        const res =
+        const response =
             await fetch(
 
                 `https://api.lanyard.rest/v1/users/${userId}`
@@ -1477,746 +2827,773 @@ async function fetchLanyard() {
             );
 
 
-        const data =
-            await res.json();
-
+        const result =
+            await response.json();
 
 
         if (
-            data.success
-            &&
-            data.data
+            !result.success ||
+            !result.data
         ) {
 
+            return;
 
-            const l =
-                data.data;
-
-
-            const discordUser =
-                l.discord_user;
+        }
 
 
+        const l =
+            result.data;
 
-            /* =============================
-               AVATAR
-            ============================= */
 
-            if (
-                discordUser
-                &&
+        const discordUser =
+            l.discord_user;
+
+
+
+        if (!discordUser) {
+
+            return;
+
+        }
+
+
+
+        /* =================================================
+           AVATAR
+        ================================================= */
+
+        let avatarUrl =
+            'https://cdn.discordapp.com/embed/avatars/0.png';
+
+
+        if (discordUser.avatar) {
+
+            const extension =
+
                 discordUser.avatar
-            ) {
+                    .startsWith('a_')
+
+                    ?
+
+                'gif'
+
+                    :
+
+                'png';
 
 
-                const ext =
+            avatarUrl =
 
-                    discordUser.avatar.startsWith('a_')
+                `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.${extension}?size=256`;
 
-                        ?
-
-                    'gif'
-
-                        :
-
-                    'png';
+        }
 
 
-
-                const avatarUrl =
-
-                    `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.${ext}?size=256`;
-
-
-
-                document
-                    .getElementById(
-                        'mainAvatar'
-                    )
-                    .src =
-                        avatarUrl;
+        document
+            .getElementById(
+                'mainAvatar'
+            )
+            .src =
+                avatarUrl;
 
 
-
-                document
-                    .getElementById(
-                        'cardAvatar'
-                    )
-                    .src =
-                        avatarUrl;
-
-
-            }
+        document
+            .getElementById(
+                'cardAvatar'
+            )
+            .src =
+                avatarUrl;
 
 
 
-            /* =============================
-               AVATAR DECORATION
-            ============================= */
+        /* =================================================
+           USERNAME
+        ================================================= */
 
-            const avatarFrame =
+        document
+            .getElementById(
+                'cardUsername'
+            )
+            .innerText =
 
-                document
-                    .getElementById(
-                        'avatarFrame'
-                    );
+                discordUser.username ||
+                'Discord User';
 
 
 
-            const decorationData =
+        /* =================================================
+           DECORATION
+        ================================================= */
 
-                (
-                    discordUser
-                    &&
-                    discordUser.avatar_decoration_data
-                )
+        const decoration =
 
-                ||
+            discordUser.avatar_decoration_data
 
-                l.avatar_decoration_data;
+            ||
 
+            l.avatar_decoration_data;
+
+
+        const avatarFrame =
+
+            document.getElementById(
+                'avatarFrame'
+            );
+
+
+        let hasDecoration =
+            false;
+
+
+        if (
+            decoration &&
+            decoration.asset
+        ) {
+
+            hasDecoration =
+                true;
+
+
+            const decorationUrl =
+
+                `https://cdn.discordapp.com/avatar-decoration-presets/${decoration.asset}.png?size=240&passthrough=true`;
 
 
             if (
-                decorationData
-                &&
-                decorationData.asset
+                avatarFrame.src !==
+                decorationUrl
             ) {
-
-
-                const assetId =
-                    decorationData.asset;
-
-
-
-                const decorationUrl =
-
-                    `https://cdn.discordapp.com/avatar-decoration-presets/${assetId}.png?size=240&passthrough=true`;
-
-
-
-                /*
-                    Önce gizli tut.
-                */
-
-                avatarFrame.style.display =
-                    'none';
-
-
-
-                /*
-                    Kaynağı ata.
-                */
 
                 avatarFrame.src =
                     decorationUrl;
 
+            }
 
 
-                /*
-                    Yüklendiğinde göster.
-                */
+            avatarFrame.style.display =
+                'block';
 
-                avatarFrame.onload =
-                    function () {
+        }
 
+        else {
 
-                        avatarFrame.style.display =
-                            'block';
+            avatarFrame.style.display =
+                'none';
 
-
-                    };
+        }
 
 
 
-                /*
-                    Yüklenmezse gizli kalsın.
-                */
+        /* =================================================
+           BADGES
+        ================================================= */
 
-                avatarFrame.onerror =
-                    function () {
+        renderBadges(
+
+            discordUser.public_flags,
+
+            hasDecoration
+
+        );
 
 
-                        avatarFrame.style.display =
-                            'none';
+
+        /* =================================================
+           STATUS
+        ================================================= */
+
+        const statusDot =
+
+            document.getElementById(
+                'statusDot'
+            );
 
 
-                    };
+        const statusColors = {
 
+            online:
+                '#3ba55d',
+
+            idle:
+                '#faa81a',
+
+            dnd:
+                '#ed4245',
+
+            offline:
+                '#747f8d'
+
+        };
+
+
+        statusDot.style.backgroundColor =
+
+            statusColors[
+                l.discord_status
+            ]
+
+            ||
+
+            '#747f8d';
+
+
+
+        /* =================================================
+           CUSTOM STATUS
+        ================================================= */
+
+        const custom =
+
+            Array.isArray(
+                l.activities
+            )
+
+            ?
+
+            l.activities.find(
+                activity =>
+                    activity.type === 4
+            )
+
+            :
+
+            null;
+
+
+        const customStatus =
+
+            document.getElementById(
+                'customStatus'
+            );
+
+
+        if (
+            custom &&
+            custom.state
+        ) {
+
+            let statusText =
+                custom.state;
+
+
+            if (
+                custom.emoji &&
+                custom.emoji.name
+            ) {
+
+                statusText =
+
+                    `${custom.emoji.name} ${statusText}`;
 
             }
 
 
-            else {
+            customStatus.innerText =
+                statusText;
 
+        }
 
-                avatarFrame.style.display =
-                    'none';
+        else {
 
-
-            }
-
-
-
-            /* =============================
-               STATUS
-            ============================= */
-
-            const statusDot =
-
-                document
-                    .getElementById(
-                        'statusDot'
-                    );
-
-
-
-            const colors = {
-
+            const prettyStatus = {
 
                 online:
-                    '#43b581',
-
+                    'online',
 
                 idle:
-                    '#faa61a',
-
+                    'idle',
 
                 dnd:
-                    '#f04747',
-
+                    'dnd',
 
                 offline:
-                    '#747f8d'
-
+                    'offline'
 
             };
 
 
+            customStatus.innerText =
 
-            statusDot.style.backgroundColor =
-
-                colors[
+                prettyStatus[
                     l.discord_status
                 ]
 
                 ||
 
-                '#747f8d';
+                'offline';
+
+        }
 
 
 
-            /* =============================
-               CUSTOM STATUS
-            ============================= */
+        /* =================================================
+           ACTIVITY ELEMENTS
+        ================================================= */
 
-            const customStatus =
+        const activityBox =
 
-                document
-                    .getElementById(
-                        'customStatus'
-                    );
-
+            document.getElementById(
+                'activityBox'
+            );
 
 
-            const custom =
+        const activityHeader =
 
-                l.activities
+            document.getElementById(
+                'activityHeader'
+            );
 
-                    ?
 
-                l.activities.find(
-                    a => a.type === 4
-                )
+        const activityTitle =
 
-                    :
+            document.getElementById(
+                'activityTitle'
+            );
 
+
+        const activitySub =
+
+            document.getElementById(
+                'activitySub'
+            );
+
+
+        const activityState =
+
+            document.getElementById(
+                'activityState'
+            );
+
+
+        const progressContainer =
+
+            document.getElementById(
+                'progressContainer'
+            );
+
+
+        const currentTimeText =
+
+            document.getElementById(
+                'currentTimeText'
+            );
+
+
+        const totalTime =
+
+            document.getElementById(
+                'totalTime'
+            );
+
+
+        const spotifyBar =
+
+            document.getElementById(
+                'spotifyBar'
+            );
+
+
+        const gameSessionLine =
+
+            document.getElementById(
+                'gameSessionLine'
+            );
+
+
+        const barFill =
+
+            document.getElementById(
+                'barFill'
+            );
+
+
+
+        /*
+            Eski timer varsa kapat
+        */
+
+        if (currentTimer) {
+
+            clearInterval(
+                currentTimer
+            );
+
+
+            currentTimer =
                 null;
 
-
-
-            customStatus.innerText =
-
-                custom
-                &&
-                custom.state
-
-                    ?
-
-                custom.state
-
-                    :
-
-                l.discord_status;
+        }
 
 
 
-            /* =============================
-               ACTIVITY
-            ============================= */
+        /* =================================================
+           SPOTIFY
+        ================================================= */
 
-            const actBox =
+        if (
+            l.listening_to_spotify &&
+            l.spotify
+        ) {
 
-                document
-                    .getElementById(
-                        'activityBox'
-                    );
-
-
-            const actHeader =
-
-                document
-                    .getElementById(
-                        'activityHeader'
-                    );
+            activityBox.style.display =
+                'block';
 
 
-            const actImg =
-
-                document
-                    .getElementById(
-                        'activityImg'
-                    );
+            activityHeader.innerText =
+                'SPOTIFY DİNLİYOR';
 
 
-            const actTitle =
-
-                document
-                    .getElementById(
-                        'activityTitle'
-                    );
+            activityTitle.innerText =
+                l.spotify.song ||
+                'Spotify';
 
 
-            const actSub =
-
-                document
-                    .getElementById(
-                        'activitySub'
-                    );
+            activitySub.innerText =
+                l.spotify.artist ||
+                '';
 
 
-            const progressContainer =
+            activityState.innerText =
 
-                document
-                    .getElementById(
-                        'progressContainer'
-                    );
+                l.spotify.album
+
+                ?
+
+                l.spotify.album
+
+                :
+
+                '';
+
+
+            setActivityImage(
+
+                l.spotify.album_art_url,
+
+                'fa-brands fa-spotify'
+
+            );
+
+
+            progressContainer.style.display =
+                'flex';
+
+
+            spotifyBar.style.display =
+                'block';
+
+
+            gameSessionLine.style.display =
+                'none';
+
+
+            totalTime.style.display =
+                'block';
 
 
 
-            if (currentTimer) {
+            const start =
 
-
-                clearInterval(
-                    currentTimer
+                Number(
+                    l.spotify.timestamps.start
                 );
 
+
+            const end =
+
+                Number(
+                    l.spotify.timestamps.end
+                );
+
+
+            const duration =
+
+                Math.max(
+                    end - start,
+                    1
+                );
+
+
+
+            function spotifyTicker() {
+
+                const elapsed =
+
+                    Math.min(
+
+                        Math.max(
+                            Date.now() - start,
+                            0
+                        ),
+
+                        duration
+
+                    );
+
+
+                const percentage =
+
+                    (
+                        elapsed /
+                        duration
+                    )
+
+                    *
+
+                    100;
+
+
+                currentTimeText.innerText =
+
+                    formatTime(
+                        elapsed
+                    );
+
+
+                totalTime.innerText =
+
+                    formatTime(
+                        duration
+                    );
+
+
+                barFill.style.width =
+
+                    `${percentage}%`;
 
             }
 
 
+            spotifyTicker();
 
-            /* =============================
-               SPOTIFY
-            ============================= */
+
+            currentTimer =
+
+                setInterval(
+                    spotifyTicker,
+                    1000
+                );
+
+
+            return;
+
+        }
+
+
+
+        /* =================================================
+           GAME ACTIVITY
+        ================================================= */
+
+        const game =
+
+            Array.isArray(
+                l.activities
+            )
+
+            ?
+
+            l.activities.find(
+
+                activity =>
+
+                    activity.type === 0
+
+            )
+
+            :
+
+            null;
+
+
+
+        if (game) {
+
+            activityBox.style.display =
+                'block';
+
+
+            activityHeader.innerText =
+                'OYNUYOR';
+
+
+            activityTitle.innerText =
+
+                game.name ||
+                'Oyun';
+
+
+            /*
+                Screenshot'taki gibi
+                "Playing VALORANT"
+                görünümü.
+            */
+
+            activitySub.innerText =
+
+                game.details
+
+                ||
+
+                `Playing ${game.name}`;
+
+
+            activityState.innerText =
+
+                game.state &&
+                game.state !== game.details
+
+                ?
+
+                game.state
+
+                :
+
+                '';
+
+
+            const gameImage =
+
+                resolveActivityAsset(
+                    game
+                );
+
+
+            setActivityImage(
+
+                gameImage,
+
+                'fa-brands fa-discord'
+
+            );
+
 
             if (
-                l.listening_to_spotify
-                &&
-                l.spotify
+                game.timestamps &&
+                game.timestamps.start
             ) {
-
-
-                actBox.style.display =
-                    'flex';
-
-
-                actHeader.innerText =
-                    "SPOTIFY DİNLİYOR";
-
-
-                actImg.src =
-                    l.spotify.album_art_url;
-
-
-                actTitle.innerText =
-                    l.spotify.song;
-
-
-                actSub.innerText =
-                    l.spotify.artist;
-
 
                 progressContainer.style.display =
                     'flex';
 
 
-
-                const start =
-                    l.spotify.timestamps.start;
-
-
-                const end =
-                    l.spotify.timestamps.end;
+                spotifyBar.style.display =
+                    'none';
 
 
-                const totalDuration =
-                    end - start;
+                gameSessionLine.style.display =
+                    'block';
 
 
-
-                const runTicker =
-                    () => {
-
-
-                        const now =
-                            Date.now();
+                totalTime.style.display =
+                    'block';
 
 
-                        const elapsed =
-                            now - start;
+                totalTime.innerText =
+                    'Aktif';
 
 
-                        const percentage =
+                const startedAt =
 
-                            Math.min(
-
-                                Math.max(
-
-                                    (
-                                        elapsed
-                                        /
-                                        totalDuration
-                                    )
-                                    *
-                                    100,
-
-                                    0
-
-                                ),
-
-                                100
-
-                            );
+                    Number(
+                        game.timestamps.start
+                    );
 
 
 
-                        document
-                            .getElementById(
-                                'barFill'
-                            )
-                            .style.width =
+                function gameTicker() {
 
-                                `${percentage}%`;
+                    const elapsed =
 
-
-
-                        document
-                            .getElementById(
-                                'currentTime'
-                            )
-                            .innerText =
-
-                                formatTime(
-
-                                    Math.min(
-
-                                        elapsed,
-
-                                        totalDuration
-
-                                    )
-
-                                );
+                        Date.now()
+                        -
+                        startedAt;
 
 
+                    currentTimeText.innerText =
 
-                        document
-                            .getElementById(
-                                'totalTime'
-                            )
-                            .innerText =
+                        formatTime(
+                            elapsed
+                        );
 
-                                formatTime(
-                                    totalDuration
-                                );
+                }
 
 
-                    };
-
-
-
-                runTicker();
+                gameTicker();
 
 
                 currentTimer =
 
                     setInterval(
-                        runTicker,
+                        gameTicker,
                         1000
                     );
 
-
             }
-
-
-
-            /* =============================
-               GAME
-            ============================= */
-
-            else if (
-                l.activities
-                &&
-                l.activities.find(
-                    a => a.type === 0
-                )
-            ) {
-
-
-                const game =
-
-                    l.activities.find(
-                        a => a.type === 0
-                    );
-
-
-
-                actBox.style.display =
-                    'flex';
-
-
-                actHeader.innerText =
-                    "OYNUYOR";
-
-
-                actTitle.innerText =
-                    game.name;
-
-
-                actSub.innerText =
-
-                    game.details
-
-                    ||
-
-                    game.state
-
-                    ||
-
-                    'Oynuyor';
-
-
-
-                /* GAME IMAGE */
-
-                if (
-                    game.assets
-                    &&
-                    game.assets.large_image
-                ) {
-
-
-                    let largeImage =
-                        game.assets.large_image;
-
-
-
-                    if (
-                        largeImage.startsWith(
-                            'spotify:'
-                        )
-                    ) {
-
-
-                        actImg.src =
-
-                            largeImage.replace(
-
-                                'spotify:',
-
-                                'https://i.scdn.co/image/'
-
-                            );
-
-
-                    }
-
-
-                    else if (
-                        largeImage.startsWith(
-                            'mp:'
-                        )
-                    ) {
-
-
-                        actImg.src =
-
-                            `https://media.discordapp.net/${largeImage.replace('mp:', '')}`;
-
-
-                    }
-
-
-                    else {
-
-
-                        actImg.src =
-
-                            `https://cdn.discordapp.com/app-assets/${game.application_id}/${largeImage}.png`;
-
-
-                    }
-
-
-                }
-
-
-                else {
-
-
-                    actImg.src =
-
-                        'https://cdn.discordapp.com/embed/avatars/0.png';
-
-
-                }
-
-
-
-                /* GAME TIMER */
-
-                if (
-                    game.timestamps
-                    &&
-                    game.timestamps.start
-                ) {
-
-
-                    progressContainer.style.display =
-                        'flex';
-
-
-                    const start =
-                        game.timestamps.start;
-
-
-
-                    document
-                        .getElementById(
-                            'barFill'
-                        )
-                        .style.width =
-                            '100%';
-
-
-
-                    document
-                        .getElementById(
-                            'barFill'
-                        )
-                        .style.background =
-                            '#43b581';
-
-
-
-                    document
-                        .getElementById(
-                            'totalTime'
-                        )
-                        .innerText =
-                            "Süre";
-
-
-
-                    const runGameTicker =
-                        () => {
-
-
-                            const elapsed =
-
-                                Date.now()
-                                -
-                                start;
-
-
-
-                            document
-                                .getElementById(
-                                    'currentTime'
-                                )
-                                .innerText =
-
-                                    formatTime(
-                                        elapsed
-                                    );
-
-
-                        };
-
-
-
-                    runGameTicker();
-
-
-                    currentTimer =
-
-                        setInterval(
-                            runGameTicker,
-                            1000
-                        );
-
-
-                }
-
-
-                else {
-
-
-                    progressContainer.style.display =
-                        'none';
-
-
-                }
-
-
-            }
-
 
             else {
 
+                progressContainer.style.display =
+                    'flex';
 
-                actBox.style.display =
+
+                spotifyBar.style.display =
                     'none';
 
 
+                gameSessionLine.style.display =
+                    'block';
+
+
+                currentTimeText.innerText =
+                    'Aktif';
+
+
+                totalTime.innerText =
+                    'Oynuyor';
+
             }
 
+
+            return;
 
         }
 
 
+
+        /* =================================================
+           NO ACTIVITY
+        ================================================= */
+
+        activityBox.style.display =
+            'none';
+
+
     }
 
-
-    catch (err) {
-
+    catch (error) {
 
         console.error(
-            "Lanyard hatası:",
-            err
+            'Lanyard hatası:',
+            error
         );
 
-
     }
-
 
 }
 
 
 
+/* ilk yükleme */
+
 fetchLanyard();
 
+
+
+/*
+    Discord durumunu
+    5 saniyede bir yenile.
+*/
 
 setInterval(
     fetchLanyard,
@@ -2225,69 +3602,55 @@ setInterval(
 
 
 
-/* =============================
-   VIDEO AUDIO
-============================= */
+/* =========================================================
+   ENTER + AUDIO
+========================================================= */
 
 const enterOverlay =
 
-    document
-        .getElementById(
-            'enterOverlay'
-        );
+    document.getElementById(
+        'enterOverlay'
+    );
 
 
 const bgVideo =
 
-    document
-        .getElementById(
-            'bgVideo'
-        );
+    document.getElementById(
+        'bgVideo'
+    );
 
 
 const muteBtn =
 
-    document
-        .getElementById(
-            'muteBtn'
-        );
+    document.getElementById(
+        'muteBtn'
+    );
 
 
 const volumeSlider =
 
-    document
-        .getElementById(
-            'volumeSlider'
-        );
+    document.getElementById(
+        'volumeSlider'
+    );
 
 
-
-/* ENTER */
 
 enterOverlay.addEventListener(
-
     'click',
-
     () => {
-
 
         enterOverlay.style.opacity =
             '0';
 
 
         setTimeout(
-
             () => {
-
 
                 enterOverlay.style.display =
                     'none';
 
-
             },
-
             500
-
         );
 
 
@@ -2296,166 +3659,144 @@ enterOverlay.addEventListener(
 
 
         bgVideo.volume =
-            volumeSlider.value;
+            Number(
+                volumeSlider.value
+            );
 
 
-        bgVideo.play()
-
-            .catch(e => {
-
+        bgVideo
+            .play()
+            .catch(error => {
 
                 console.log(
-                    "Oynatma hatası:",
-                    e
+                    'Video oynatma hatası:',
+                    error
                 );
-
 
             });
 
-
     }
-
 );
 
 
 
-/* VOLUME */
+/* =========================================================
+   VOLUME SLIDER
+========================================================= */
 
 volumeSlider.addEventListener(
-
     'input',
+    event => {
 
-    (e) => {
+        const volume =
+
+            Number(
+                event.target.value
+            );
 
 
         bgVideo.volume =
-            e.target.value;
+            volume;
 
 
         bgVideo.muted =
-            e.target.value == 0;
+            volume === 0;
 
 
-        updateVolumeIcon(
-            bgVideo.volume
-        );
-
+        updateVolumeIcon();
 
     }
-
 );
 
 
 
-/* MUTE */
+/* =========================================================
+   MUTE
+========================================================= */
 
 muteBtn.addEventListener(
-
     'click',
-
     () => {
 
-
         if (
-            bgVideo.muted
-            ||
-            bgVideo.volume == 0
+            bgVideo.muted ||
+            bgVideo.volume === 0
         ) {
-
 
             bgVideo.muted =
                 false;
 
 
+            let volume =
+
+                Number(
+                    volumeSlider.value
+                );
+
+
+            if (volume === 0) {
+
+                volume =
+                    0.5;
+
+
+                volumeSlider.value =
+                    '0.5';
+
+            }
+
+
             bgVideo.volume =
-
-                volumeSlider.value > 0
-
-                    ?
-
-                volumeSlider.value
-
-                    :
-
-                0.5;
-
-
-            volumeSlider.value =
-                bgVideo.volume;
-
+                volume;
 
         }
 
-
         else {
-
 
             bgVideo.muted =
                 true;
 
-
-            bgVideo.volume =
-                0;
-
-
-            volumeSlider.value =
-                0;
-
-
         }
 
 
-        updateVolumeIcon(
-            bgVideo.volume
-        );
-
+        updateVolumeIcon();
 
     }
-
 );
 
 
 
-/* ICON */
+function updateVolumeIcon() {
 
-function updateVolumeIcon(vol) {
+    if (
+        bgVideo.muted ||
+        bgVideo.volume === 0
+    ) {
+
+        muteBtn.innerHTML =
+
+            '<i class="fa-solid fa-volume-xmark"></i>';
+
+        return;
+    }
 
 
     if (
-        vol == 0
-        ||
-        bgVideo.muted
+        bgVideo.volume <
+        0.5
     ) {
 
-
         muteBtn.innerHTML =
-            '<i class="fa-solid fa-volume-xmark"></i>';
 
-
-    }
-
-
-    else if (
-        vol < 0.5
-    ) {
-
-
-        muteBtn.innerHTML =
             '<i class="fa-solid fa-volume-low"></i>';
 
-
+        return;
     }
 
 
-    else {
+    muteBtn.innerHTML =
 
-
-        muteBtn.innerHTML =
-            '<i class="fa-solid fa-volume-high"></i>';
-
-
-    }
-
+        '<i class="fa-solid fa-volume-high"></i>';
 
 }
 
