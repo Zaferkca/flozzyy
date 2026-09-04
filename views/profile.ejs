@@ -1,482 +1,2282 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Flozzy</title>
-    <link rel="icon" type="image/png" href="/ikon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title id="pageTitle">
+        Flozzy
+    </title>
+
+    <link rel="icon"
+          type="image/png"
+          href="/ikon.png">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
+          rel="stylesheet">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         body {
+
             color: #ffffff;
+
             min-height: 100vh;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             justify-content: center;
+
             gap: 12px;
+
             overflow: hidden;
+
             position: relative;
+
             background-color: #050505;
+
         }
+
+
+        /* =========================
+           ARKA PLAN VİDEO
+        ========================= */
+
         .bg-video {
+
             position: fixed;
+
             top: 50%;
+
             left: 50%;
+
             transform: translate(-50%, -50%);
+
             min-width: 100vw;
+
             min-height: 100vh;
+
             width: auto;
+
             height: auto;
+
             object-fit: cover;
+
             z-index: -2;
+
         }
+
+
+        /* =========================
+           GİRİŞ EKRANI
+        ========================= */
 
         #enterOverlay {
+
             position: fixed;
+
             top: 0;
+
             left: 0;
+
             width: 100vw;
+
             height: 100vh;
+
             background: rgba(5, 5, 5, 0.92);
+
             backdrop-filter: blur(12px);
+
+            -webkit-backdrop-filter: blur(12px);
+
             z-index: 9999;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             justify-content: center;
+
             cursor: pointer;
+
             transition: opacity 0.5s ease;
+
         }
+
+
         .enter-text {
+
             font-size: 22px;
+
             font-weight: 600;
+
             color: #ffffff;
+
             letter-spacing: 1px;
+
             animation: pulseText 1.5s infinite alternate;
+
         }
+
+
         @keyframes pulseText {
-            0% { opacity: 0.4; }
-            100% { opacity: 1; }
+
+            0% {
+                opacity: 0.4;
+            }
+
+            100% {
+                opacity: 1;
+            }
+
         }
 
-        .avatar-container { 
-            position: relative; 
-            width: 170px; 
-            height: 170px; 
-            margin-bottom: 5px; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .main-avatar { 
-            width: 110px; 
-            height: 110px; 
-            border-radius: 50%; 
-            object-fit: cover; 
-            position: absolute;
-            z-index: 1; 
-        }
-        .avatar-frame {
-            position: absolute;
+
+        /* =========================
+           AVATAR
+        ========================= */
+
+        .avatar-container {
+
+            position: relative;
+
             width: 170px;
+
             height: 170px;
-            object-fit: contain;
-            z-index: 2;
-            pointer-events: none;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none; /* Varsayılan olarak gizli başlar */
-        }
 
-        .glow-username { 
-            font-size: 36px; 
-            font-weight: 800; 
-            color: #ffffff; 
+            margin-bottom: 5px;
+
             display: flex;
+
             align-items: center;
-            gap: 10px;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.3); 
+
+            justify-content: center;
+
         }
 
-        .bio-text { font-size: 14px; color: #cccccc; margin-bottom: 8px; text-align: center; max-width: 400px; padding: 0 15px; }
+
+        .main-avatar {
+
+            width: 110px;
+
+            height: 110px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            position: absolute;
+
+            z-index: 1;
+
+        }
+
+
+        /*
+            Discord Avatar Decoration
+
+            Avatarın üzerinde görünür.
+        */
+
+        .avatar-frame {
+
+            position: absolute;
+
+            width: 170px;
+
+            height: 170px;
+
+            object-fit: contain;
+
+            z-index: 2;
+
+            pointer-events: none;
+
+            top: 50%;
+
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            display: none;
+
+        }
+
+
+        /* =========================
+           KULLANICI ADI
+        ========================= */
+
+        .glow-username {
+
+            font-size: 36px;
+
+            font-weight: 800;
+
+            color: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            text-shadow:
+                0 0 15px rgba(255,255,255,0.8),
+                0 0 30px rgba(255,255,255,0.3);
+
+        }
+
+
+        .bio-text {
+
+            font-size: 14px;
+
+            color: #cccccc;
+
+            margin-bottom: 8px;
+
+            text-align: center;
+
+            max-width: 400px;
+
+            padding: 0 15px;
+
+        }
+
+
+        /* =========================
+           DISCORD KART
+        ========================= */
 
         .discord-card {
-            background: rgba(18, 18, 22, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            background: rgba(18,18,22,0.4);
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
             backdrop-filter: blur(18px);
+
             -webkit-backdrop-filter: blur(18px);
+
             border-radius: 20px;
+
             padding: 18px 22px;
+
             width: 390px;
+
             display: flex;
+
             flex-direction: column;
+
             gap: 12px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.5);
+
         }
-        .card-top { display: flex; align-items: center; gap: 14px; }
-        .card-avatar-wrapper { position: relative; width: 58px; height: 58px; flex-shrink: 0; }
-        .card-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background-color: #1a1a20; }
-        .status-dot { width: 15px; height: 15px; border-radius: 50%; position: absolute; bottom: 0px; right: 0px; border: 3px solid #0f0f12; background-color: #747f8d; }
-        .card-user-info { display: flex; flex-direction: column; }
-        .card-username { font-size: 17px; font-weight: 700; color: #ffffff; }
-        .card-status-text { font-size: 13px; color: #b0b0b0; font-style: italic; }
+
+
+        .card-top {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+        }
+
+
+        .card-avatar-wrapper {
+
+            position: relative;
+
+            width: 58px;
+
+            height: 58px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .card-avatar {
+
+            width: 100%;
+
+            height: 100%;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            background-color: #1a1a20;
+
+        }
+
+
+        .status-dot {
+
+            width: 15px;
+
+            height: 15px;
+
+            border-radius: 50%;
+
+            position: absolute;
+
+            bottom: 0;
+
+            right: 0;
+
+            border:
+                3px solid #0f0f12;
+
+            background-color: #747f8d;
+
+        }
+
+
+        .card-user-info {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .card-username {
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            color: #ffffff;
+
+        }
+
+
+        .card-status-text {
+
+            font-size: 13px;
+
+            color: #b0b0b0;
+
+            font-style: italic;
+
+        }
+
+
+        /* =========================
+           ACTIVITY
+        ========================= */
 
         .activity-box {
-            display: none;
-            background: rgba(18, 18, 22, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 14px;
-            padding: 12px;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .activity-header { font-size: 11px; font-weight: 700; color: #a0a0a5; letter-spacing: 0.5px; margin-bottom: 2px; }
-        .activity-main { display: flex; align-items: center; gap: 12px; width: 100%; }
-        .activity-album { width: 50px; height: 50px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
-        .activity-details { display: flex; flex-direction: column; overflow: hidden; width: 100%; }
-        .activity-title { font-size: 13px; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .activity-sub { font-size: 12px; color: #b3b3b3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        .progress-container { width: 100%; display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-        .time-text { font-size: 11px; color: #888888; font-family: monospace; white-space: nowrap; }
-        .bar-bg { flex-grow: 1; height: 5px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; overflow: hidden; }
-        .bar-fill { height: 100%; background: #43b581; width: 0%; transition: width 0.3s linear; border-radius: 3px; }
 
-        .socials { display: flex; gap: 20px; margin-top: 8px; }
-        .socials a { color: #ffffff; font-size: 24px; text-decoration: none; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)); transition: transform 0.2s; }
-        .socials a:hover { transform: scale(1.15); }
+            display: none;
+
+            background:
+                rgba(18,18,22,0.35);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(10px);
+
+            -webkit-backdrop-filter: blur(10px);
+
+            border-radius: 14px;
+
+            padding: 12px;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+        }
+
+
+        .activity-header {
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            color: #a0a0a5;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 2px;
+
+        }
+
+
+        .activity-main {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            width: 100%;
+
+        }
+
+
+        .activity-album {
+
+            width: 50px;
+
+            height: 50px;
+
+            border-radius: 10px;
+
+            object-fit: cover;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .activity-details {
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow: hidden;
+
+            width: 100%;
+
+        }
+
+
+        .activity-title {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            color: #ffffff;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+        }
+
+
+        .activity-sub {
+
+            font-size: 12px;
+
+            color: #b3b3b3;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+        }
+
+
+        /* =========================
+           PROGRESS
+        ========================= */
+
+        .progress-container {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 4px;
+
+        }
+
+
+        .time-text {
+
+            font-size: 11px;
+
+            color: #888888;
+
+            font-family: monospace;
+
+            white-space: nowrap;
+
+        }
+
+
+        .bar-bg {
+
+            flex-grow: 1;
+
+            height: 5px;
+
+            background:
+                rgba(255,255,255,0.1);
+
+            border-radius: 3px;
+
+            overflow: hidden;
+
+        }
+
+
+        .bar-fill {
+
+            height: 100%;
+
+            background: #43b581;
+
+            width: 0%;
+
+            transition:
+                width 0.3s linear;
+
+            border-radius: 3px;
+
+        }
+
+
+        /* =========================
+           SOSYAL MEDYA
+        ========================= */
+
+        .socials {
+
+            display: flex;
+
+            gap: 20px;
+
+            margin-top: 8px;
+
+        }
+
+
+        .socials a {
+
+            color: #ffffff;
+
+            font-size: 24px;
+
+            text-decoration: none;
+
+            filter:
+                drop-shadow(
+                    0 0 8px
+                    rgba(255,255,255,0.6)
+                );
+
+            transition:
+                transform 0.2s;
+
+        }
+
+
+        .socials a:hover {
+
+            transform:
+                scale(1.15);
+
+        }
+
+
+        /* =========================
+           VIEW COUNTER
+        ========================= */
 
         .view-counter {
+
             position: absolute;
+
             top: 20px;
+
             right: 20px;
-            background: rgba(18, 18, 22, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
+
+            background:
+                rgba(18,18,22,0.65);
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
+            backdrop-filter:
+                blur(12px);
+
+            -webkit-backdrop-filter:
+                blur(12px);
+
             color: #fff;
-            padding: 8px 18px;
-            border-radius: 30px;
-            font-size: 13px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-            z-index: 10;
+
+            padding:
+                8px 18px;
+
+            border-radius:
+                30px;
+
+            font-size:
+                13px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            gap:
+                2px;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.5);
+
+            z-index:
+                10;
+
         }
+
+
         .view-counter span:first-child {
-            font-size: 9px;
-            color: #999;
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+
+            font-size:
+                9px;
+
+            color:
+                #999;
+
+            text-transform:
+                uppercase;
+
+            font-weight:
+                600;
+
+            letter-spacing:
+                0.5px;
+
         }
+
+
         .view-counter-inner {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 700;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                6px;
+
+            font-weight:
+                700;
+
         }
-        .view-counter-inner i { color: #ccc; font-size: 12px; }
+
+
+        .view-counter-inner i {
+
+            color:
+                #ccc;
+
+            font-size:
+                12px;
+
+        }
+
+
+        /* =========================
+           SES
+        ========================= */
 
         .audio-control {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(18, 18, 22, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            padding: 8px 14px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 10;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+
+            position:
+                absolute;
+
+            bottom:
+                20px;
+
+            left:
+                20px;
+
+            background:
+                rgba(18,18,22,0.65);
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
+            backdrop-filter:
+                blur(12px);
+
+            -webkit-backdrop-filter:
+                blur(12px);
+
+            padding:
+                8px 14px;
+
+            border-radius:
+                30px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            z-index:
+                10;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.4);
+
         }
+
+
         .audio-control button {
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            font-size: 14px;
+
+            background:
+                none;
+
+            border:
+                none;
+
+            color:
+                #fff;
+
+            cursor:
+                pointer;
+
+            font-size:
+                14px;
+
         }
+
+
         .audio-slider {
-            width: 70px;
-            accent-color: #ffffff;
-            cursor: pointer;
-            height: 4px;
+
+            width:
+                70px;
+
+            accent-color:
+                #ffffff;
+
+            cursor:
+                pointer;
+
+            height:
+                4px;
+
         }
+
+
     </style>
+
 </head>
+
+
 <body>
 
-    <div id="enterOverlay">
-        <div class="enter-text">click to enter...</div>
+
+<!-- =============================
+     CLICK TO ENTER
+============================= -->
+
+<div id="enterOverlay">
+
+    <div class="enter-text">
+        click to enter...
     </div>
 
-    <div class="view-counter">
-        <span>Profile Views</span>
-        <div class="view-counter-inner">
-            <i class="fa-solid fa-eye"></i>
-            <span id="viewCountDisplay"><%= settings.viewCount %></span>
+</div>
+
+
+
+<!-- =============================
+     VIEW COUNTER
+============================= -->
+
+<div class="view-counter">
+
+    <span>
+        Profile Views
+    </span>
+
+    <div class="view-counter-inner">
+
+        <i class="fa-solid fa-eye"></i>
+
+        <span id="viewCountDisplay">
+            <%= settings.viewCount %>
+        </span>
+
+    </div>
+
+</div>
+
+
+
+<!-- =============================
+     BACKGROUND VIDEO
+============================= -->
+
+<video
+    id="bgVideo"
+    loop
+    muted
+    playsinline
+    class="bg-video"
+>
+
+    <source
+        src="/ssstik.io_@weall_loveasap_1788532602718.mp4"
+        type="video/mp4"
+    >
+
+</video>
+
+
+
+<!-- =============================
+     AUDIO CONTROL
+============================= -->
+
+<div class="audio-control">
+
+    <button id="muteBtn">
+
+        <i class="fa-solid fa-volume-high"></i>
+
+    </button>
+
+    <input
+        type="range"
+        id="volumeSlider"
+        class="audio-slider"
+        min="0"
+        max="1"
+        step="0.05"
+        value="1"
+    >
+
+</div>
+
+
+
+<!-- =============================
+     ANA AVATAR
+============================= -->
+
+<div class="avatar-container">
+
+    <!-- Discord Avatar -->
+
+    <img
+        id="mainAvatar"
+        class="main-avatar"
+        src="https://cdn.discordapp.com/embed/avatars/0.png"
+        alt="Avatar"
+    >
+
+
+    <!-- Discord Avatar Decoration -->
+
+    <img
+        id="avatarFrame"
+        class="avatar-frame"
+        src="<%= user.avatar_decoration_url || '' %>"
+        alt=""
+        style="<%= user.avatar_decoration_url
+            ? 'display:block;'
+            : 'display:none;' %>"
+        onload="this.style.display='block'"
+        onerror="this.style.display='none'"
+    >
+
+</div>
+
+
+
+<!-- =============================
+     USERNAME
+============================= -->
+
+<div class="glow-username">
+
+    <span>
+
+        <%= user.global_name || user.username %>
+
+    </span>
+
+</div>
+
+
+
+<!-- =============================
+     BIO
+============================= -->
+
+<div class="bio-text">
+
+    <%= settings.bioText %>
+
+</div>
+
+
+
+<!-- =============================
+     DISCORD CARD
+============================= -->
+
+<div class="discord-card">
+
+
+    <div class="card-top">
+
+
+        <div class="card-avatar-wrapper">
+
+            <img
+                id="cardAvatar"
+                class="card-avatar"
+                src="https://cdn.discordapp.com/embed/avatars/0.png"
+                alt="Avatar"
+            >
+
+            <div
+                id="statusDot"
+                class="status-dot"
+            ></div>
+
         </div>
-    </div>
 
-    <video id="bgVideo" loop muted playsinline class="bg-video">
-        <source src="/ssstik.io_@weall_loveasap_1788532602718.mp4" type="video/mp4">
-    </video>
 
-    <div class="audio-control">
-        <button id="muteBtn"><i class="fa-solid fa-volume-high"></i></button>
-        <input type="range" id="volumeSlider" class="audio-slider" min="0" max="1" step="0.05" value="1">
-    </div>
+        <div class="card-user-info">
 
-    <div class="avatar-container">
-        <img id="mainAvatar" class="main-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar">
-        <!-- Çerçeve elementine başlangıçta src verilmedi, güvenli hale getirildi -->
-        <img id="avatarFrame" class="avatar-frame" src="<%= user.avatar_decoration_url || '' %>" alt="Frame" style="<%= user.avatar_decoration_url ? 'display: block;' : 'display: none;' %>">
-    </div>
+            <span class="card-username">
 
-    <div class="glow-username">
-        <span><%= user.global_name || user.username %></span>
-    </div>
-    <div class="bio-text"><%= settings.bioText %></div>
+                <%= user.username %>
 
-    <div class="discord-card">
-        <div class="card-top">
-            <div class="card-avatar-wrapper">
-                <img id="cardAvatar" class="card-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar">
-                <div id="statusDot" class="status-dot"></div>
-            </div>
-            <div class="card-user-info">
-                <span class="card-username"><%= user.username %></span>
-                <span id="customStatus" class="card-status-text">Yükleniyor...</span>
-            </div>
+            </span>
+
+
+            <span
+                id="customStatus"
+                class="card-status-text"
+            >
+
+                Yükleniyor...
+
+            </span>
+
         </div>
 
-        <div id="activityBox" class="activity-box">
-            <div id="activityHeader" class="activity-header">Aktivite</div>
-            <div class="activity-main">
-                <img id="activityImg" class="activity-album" src="" alt="Art">
-                <div class="activity-details">
-                    <span id="activityTitle" class="activity-title">...</span>
-                    <span id="activitySub" class="activity-sub">...</span>
-                </div>
-            </div>
-            <div id="progressContainer" class="progress-container" style="display: none;">
-                <span id="currentTime" class="time-text">0:00</span>
-                <div class="bar-bg">
-                    <div id="barFill" class="bar-fill"></div>
-                </div>
-                <span id="totalTime" class="time-text">Süre</span>
-            </div>
+
+    </div>
+
+
+
+    <!-- ACTIVITY -->
+
+    <div
+        id="activityBox"
+        class="activity-box"
+    >
+
+
+        <div
+            id="activityHeader"
+            class="activity-header"
+        >
+
+            Aktivite
+
         </div>
+
+
+        <div class="activity-main">
+
+
+            <img
+                id="activityImg"
+                class="activity-album"
+                src=""
+                alt="Art"
+            >
+
+
+            <div class="activity-details">
+
+
+                <span
+                    id="activityTitle"
+                    class="activity-title"
+                >
+                    ...
+                </span>
+
+
+                <span
+                    id="activitySub"
+                    class="activity-sub"
+                >
+                    ...
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <div
+            id="progressContainer"
+            class="progress-container"
+            style="display:none;"
+        >
+
+
+            <span
+                id="currentTime"
+                class="time-text"
+            >
+                0:00
+            </span>
+
+
+            <div class="bar-bg">
+
+                <div
+                    id="barFill"
+                    class="bar-fill"
+                ></div>
+
+            </div>
+
+
+            <span
+                id="totalTime"
+                class="time-text"
+            >
+                Süre
+            </span>
+
+
+        </div>
+
+
     </div>
 
-    <div class="socials">
-        <a href="https://discord.com/users/<%= user.id %>" target="_blank"><i class="fa-brands fa-discord"></i></a>
-        <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
-    </div>
 
-    <script>
-        let titleText = "Flozzy • ";
-        let titleIndex = 0;
-        function marqueeTitle() {
-            document.title = titleText.substring(titleIndex) + titleText.substring(0, titleIndex);
-            titleIndex = (titleIndex + 1) % titleText.length;
+</div>
+
+
+
+<!-- =============================
+     SOCIAL
+============================= -->
+
+<div class="socials">
+
+
+    <a
+        href="https://discord.com/users/<%= user.id %>"
+        target="_blank"
+    >
+
+        <i class="fa-brands fa-discord"></i>
+
+    </a>
+
+
+    <a
+        href="https://tiktok.com"
+        target="_blank"
+    >
+
+        <i class="fa-brands fa-tiktok"></i>
+
+    </a>
+
+
+</div>
+
+
+
+<script>
+
+
+/* =============================
+   TITLE ANIMATION
+============================= */
+
+let titleText =
+    "Flozzy • ";
+
+let titleIndex =
+    0;
+
+
+function marqueeTitle() {
+
+    document.title =
+        titleText.substring(titleIndex)
+        +
+        titleText.substring(
+            0,
+            titleIndex
+        );
+
+    titleIndex =
+        (titleIndex + 1)
+        %
+        titleText.length;
+
+}
+
+
+setInterval(
+    marqueeTitle,
+    300
+);
+
+
+
+/* =============================
+   USER ID
+============================= */
+
+const userId =
+    "<%= user.id %>";
+
+
+let currentTimer =
+    null;
+
+
+
+/* =============================
+   VIEW COUNTER
+============================= */
+
+if (
+    !localStorage.getItem(
+        'flozzy_visited'
+    )
+) {
+
+    localStorage.setItem(
+        'flozzy_visited',
+        'true'
+    );
+
+
+    fetch(
+        '/api/increment-view',
+        {
+            method: 'POST'
         }
-        setInterval(marqueeTitle, 300);
+    )
 
-        const userId = "<%= user.id %>";
-        let currentTimer = null;
+    .then(
+        res => res.json()
+    )
 
-        if (!localStorage.getItem('flozzy_visited')) {
-            localStorage.setItem('flozzy_visited', 'true');
-            fetch('/api/increment-view', { method: 'POST' })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        document.getElementById('viewCountDisplay').innerText = data.viewCount;
-                    }
-                }).catch(err => console.error("Sayaç hatası:", err));
+    .then(data => {
+
+        if (data.success) {
+
+            document
+            .getElementById(
+                'viewCountDisplay'
+            )
+            .innerText =
+                data.viewCount;
+
         }
 
-        function formatTime(ms) {
-            const totalSeconds = Math.floor(ms / 1000);
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
-            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        }
+    })
 
-        async function fetchLanyard() {
-            try {
-                const res = await fetch(`https://api.lanyard.rest/v1/users/${userId}`);
-                const data = await res.json();
+    .catch(err => {
 
-                if (data.success && data.data) {
-                    const l = data.data;
-                    const discordUser = l.discord_user;
+        console.error(
+            "Sayaç hatası:",
+            err
+        );
 
-                    if (discordUser && discordUser.avatar) {
-                        const ext = discordUser.avatar.startsWith('a_') ? 'gif' : 'png';
-                        const avatarUrl = `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.${ext}?size=256`;
-                        document.getElementById('mainAvatar').src = avatarUrl;
-                        document.getElementById('cardAvatar').src = avatarUrl;
+    });
+
+}
+
+
+
+/* =============================
+   ZAMAN FORMAT
+============================= */
+
+function formatTime(ms) {
+
+    const totalSeconds =
+        Math.floor(
+            ms / 1000
+        );
+
+
+    const minutes =
+        Math.floor(
+            totalSeconds / 60
+        );
+
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+}
+
+
+
+/* =============================
+   LANYARD
+============================= */
+
+async function fetchLanyard() {
+
+    try {
+
+
+        const res =
+            await fetch(
+
+                `https://api.lanyard.rest/v1/users/${userId}`
+
+            );
+
+
+        const data =
+            await res.json();
+
+
+
+        if (
+            data.success
+            &&
+            data.data
+        ) {
+
+
+            const l =
+                data.data;
+
+
+            const discordUser =
+                l.discord_user;
+
+
+
+            /* =============================
+               DISCORD AVATAR
+            ============================= */
+
+            if (
+                discordUser
+                &&
+                discordUser.avatar
+            ) {
+
+
+                const ext =
+
+                    discordUser.avatar
+                        .startsWith('a_')
+
+                        ? 'gif'
+
+                        : 'png';
+
+
+
+                const avatarUrl =
+
+                    `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.${ext}?size=256`;
+
+
+
+                document
+                    .getElementById(
+                        'mainAvatar'
+                    )
+                    .src =
+                        avatarUrl;
+
+
+
+                document
+                    .getElementById(
+                        'cardAvatar'
+                    )
+                    .src =
+                        avatarUrl;
+
+
+            }
+
+
+
+            /* =============================
+               DISCORD AVATAR DECORATION
+            ============================= */
+
+            const avatarFrame =
+
+                document.getElementById(
+                    'avatarFrame'
+                );
+
+
+
+            const decorationData =
+
+                (
+                    discordUser
+                    &&
+                    discordUser.avatar_decoration_data
+                )
+
+                ||
+
+                l.avatar_decoration_data;
+
+
+
+            if (
+                decorationData
+                &&
+                decorationData.asset
+            ) {
+
+
+                const assetId =
+                    decorationData.asset;
+
+
+
+                const decorationUrl =
+
+                    `https://cdn.discordapp.com/avatar-decoration-presets/${assetId}.png?size=240&passthrough=true`;
+
+
+
+                /*
+                    Önce URL'yi ver.
+                */
+
+                avatarFrame.src =
+                    decorationUrl;
+
+
+
+                /*
+                    Resim yüklenince göster.
+                */
+
+                avatarFrame.onload =
+                    function () {
+
+                        avatarFrame.style.display =
+                            'block';
+
+                    };
+
+
+
+                /*
+                    Link bozuksa gizle.
+
+                    Böylece ekranda "Frame"
+                    yazısı çıkmaz.
+                */
+
+                avatarFrame.onerror =
+                    function () {
+
+                        avatarFrame.style.display =
+                            'none';
+
+                    };
+
+
+                console.log(
+                    "Discord Decoration:",
+                    decorationUrl
+                );
+
+
+            } else {
+
+
+                avatarFrame.style.display =
+                    'none';
+
+
+            }
+
+
+
+            /* =============================
+               DISCORD STATUS
+            ============================= */
+
+            const statusDot =
+
+                document.getElementById(
+                    'statusDot'
+                );
+
+
+
+            const colors = {
+
+                online:
+                    '#43b581',
+
+                idle:
+                    '#faa61a',
+
+                dnd:
+                    '#f04747',
+
+                offline:
+                    '#747f8d'
+
+            };
+
+
+
+            statusDot.style.backgroundColor =
+
+                colors[
+                    l.discord_status
+                ]
+
+                ||
+
+                '#747f8d';
+
+
+
+            /* =============================
+               CUSTOM STATUS
+            ============================= */
+
+            const customStatus =
+
+                document.getElementById(
+                    'customStatus'
+                );
+
+
+
+            const custom =
+
+                l.activities
+
+                    ?
+
+                l.activities.find(
+                    a => a.type === 4
+                )
+
+                    :
+
+                null;
+
+
+
+            customStatus.innerText =
+
+                custom
+                &&
+                custom.state
+
+                    ?
+
+                custom.state
+
+                    :
+
+                l.discord_status;
+
+
+
+            /* =============================
+               ACTIVITY ELEMENTS
+            ============================= */
+
+            const actBox =
+
+                document.getElementById(
+                    'activityBox'
+                );
+
+
+            const actHeader =
+
+                document.getElementById(
+                    'activityHeader'
+                );
+
+
+            const actImg =
+
+                document.getElementById(
+                    'activityImg'
+                );
+
+
+            const actTitle =
+
+                document.getElementById(
+                    'activityTitle'
+                );
+
+
+            const actSub =
+
+                document.getElementById(
+                    'activitySub'
+                );
+
+
+            const progressContainer =
+
+                document.getElementById(
+                    'progressContainer'
+                );
+
+
+
+            if (currentTimer) {
+
+                clearInterval(
+                    currentTimer
+                );
+
+            }
+
+
+
+            /* =============================
+               SPOTIFY
+            ============================= */
+
+            if (
+                l.listening_to_spotify
+                &&
+                l.spotify
+            ) {
+
+
+                actBox.style.display =
+                    'flex';
+
+
+                actHeader.innerText =
+                    "SPOTIFY DİNLİYOR";
+
+
+                actImg.src =
+                    l.spotify.album_art_url;
+
+
+                actTitle.innerText =
+                    l.spotify.song;
+
+
+                actSub.innerText =
+                    l.spotify.artist;
+
+
+
+                progressContainer.style.display =
+                    'flex';
+
+
+
+                const start =
+                    l.spotify.timestamps.start;
+
+
+                const end =
+                    l.spotify.timestamps.end;
+
+
+                const totalDuration =
+                    end - start;
+
+
+
+                const runTicker =
+                    () => {
+
+
+                        const now =
+                            Date.now();
+
+
+                        const elapsed =
+                            now - start;
+
+
+                        const percentage =
+
+                            Math.min(
+
+                                Math.max(
+
+                                    (
+                                        elapsed
+                                        /
+                                        totalDuration
+                                    )
+                                    *
+                                    100,
+
+                                    0
+
+                                ),
+
+                                100
+
+                            );
+
+
+
+                        document
+                            .getElementById(
+                                'barFill'
+                            )
+                            .style.width =
+
+                                `${percentage}%`;
+
+
+
+                        document
+                            .getElementById(
+                                'currentTime'
+                            )
+                            .innerText =
+
+                                formatTime(
+
+                                    Math.min(
+
+                                        elapsed,
+
+                                        totalDuration
+
+                                    )
+
+                                );
+
+
+
+                        document
+                            .getElementById(
+                                'totalTime'
+                            )
+                            .innerText =
+
+                                formatTime(
+                                    totalDuration
+                                );
+
+
+                    };
+
+
+
+                runTicker();
+
+
+                currentTimer =
+                    setInterval(
+                        runTicker,
+                        1000
+                    );
+
+
+            }
+
+
+            /* =============================
+               GAME ACTIVITY
+            ============================= */
+
+            else if (
+                l.activities
+                &&
+                l.activities.find(
+                    a => a.type === 0
+                )
+            ) {
+
+
+                const game =
+
+                    l.activities.find(
+                        a => a.type === 0
+                    );
+
+
+
+                actBox.style.display =
+                    'flex';
+
+
+
+                actHeader.innerText =
+                    "OYNUYOR";
+
+
+
+                actTitle.innerText =
+                    game.name;
+
+
+
+                actSub.innerText =
+
+                    game.details
+
+                    ||
+
+                    game.state
+
+                    ||
+
+                    'Oynuyor';
+
+
+
+                /* =============================
+                   GAME IMAGE
+                ============================= */
+
+                if (
+                    game.assets
+                    &&
+                    game.assets.large_image
+                ) {
+
+
+                    let largeImage =
+                        game.assets.large_image;
+
+
+
+                    if (
+                        largeImage.startsWith(
+                            'spotify:'
+                        )
+                    ) {
+
+
+                        actImg.src =
+
+                            largeImage.replace(
+
+                                'spotify:',
+
+                                'https://i.scdn.co/image/'
+
+                            );
+
+
                     }
 
-                    // Gelişmiş Çerçeve Kontrolü (Discord API / Lanyard Verisi)
-                    const avatarFrame = document.getElementById('avatarFrame');
-                    
-                    // Lanyard içinde bazen discord_user.avatar_decoration_data veya data.avatar_decoration_data olarak gelebilir
-                    const decorationData = (discordUser && discordUser.avatar_decoration_data) || l.avatar_decoration_data;
 
-                    if (decorationData && decorationData.asset) {
-                        const assetId = decorationData.asset;
-                        const frameExt = assetId.startsWith('a_') ? 'gif' : 'png';
-                        avatarFrame.src = `https://cdn.discordapp.com/avatar-decorations/${userId}/${assetId}.${frameExt}`;
-                        avatarFrame.style.display = 'block'; // Çerçeve varsa göster
-                    } else {
-                        avatarFrame.style.display = 'none'; // Çerçeve yoksa gizle (kırık resim çıkmaz)
+                    else if (
+                        largeImage.startsWith(
+                            'mp:'
+                        )
+                    ) {
+
+
+                        actImg.src =
+
+                            `https://media.discordapp.net/${largeImage.replace('mp:', '')}`;
+
+
                     }
 
-                    const statusDot = document.getElementById('statusDot');
-                    const colors = { online: '#43b581', idle: '#faa61a', dnd: '#f04747', offline: '#747f8d' };
-                    statusDot.style.backgroundColor = colors[l.discord_status] || '#747f8d';
 
-                    const customStatus = document.getElementById('customStatus');
-                    const custom = l.activities ? l.activities.find(a => a.type === 4) : null;
-                    customStatus.innerText = custom && custom.state ? custom.state : l.discord_status;
+                    else {
 
-                    const actBox = document.getElementById('activityBox');
-                    const actHeader = document.getElementById('activityHeader');
-                    const actImg = document.getElementById('activityImg');
-                    const actTitle = document.getElementById('activityTitle');
-                    const actSub = document.getElementById('activitySub');
-                    const progressContainer = document.getElementById('progressContainer');
 
-                    if (currentTimer) clearInterval(currentTimer);
+                        actImg.src =
 
-                    if (l.listening_to_spotify && l.spotify) {
-                        actBox.style.display = 'flex';
-                        actHeader.innerText = "SPOTIFY DİNLİYOR";
-                        actImg.src = l.spotify.album_art_url;
-                        actTitle.innerText = l.spotify.song;
-                        actSub.innerText = l.spotify.artist;
+                            `https://cdn.discordapp.com/app-assets/${game.application_id}/${largeImage}.png`;
 
-                        progressContainer.style.display = 'flex';
-                        const start = l.spotify.timestamps.start;
-                        const end = l.spotify.timestamps.end;
-                        const totalDuration = end - start;
 
-                        const runTicker = () => {
-                            const now = Date.now();
-                            const elapsed = now - start;
-                            const percentage = Math.min(Math.max((elapsed / totalDuration) * 100, 0), 100);
-                            
-                            document.getElementById('barFill').style.width = `${percentage}%`;
-                            document.getElementById('currentTime').innerText = formatTime(Math.min(elapsed, totalDuration));
-                            document.getElementById('totalTime').innerText = formatTime(totalDuration);
+                    }
+
+
+                }
+
+
+                else {
+
+
+                    actImg.src =
+
+                        'https://cdn.discordapp.com/embed/avatars/0.png';
+
+
+                }
+
+
+
+                /* =============================
+                   GAME TIMER
+                ============================= */
+
+                if (
+                    game.timestamps
+                    &&
+                    game.timestamps.start
+                ) {
+
+
+                    progressContainer.style.display =
+                        'flex';
+
+
+
+                    const start =
+                        game.timestamps.start;
+
+
+
+                    document
+                        .getElementById(
+                            'barFill'
+                        )
+                        .style.width =
+                            '100%';
+
+
+
+                    document
+                        .getElementById(
+                            'barFill'
+                        )
+                        .style.background =
+                            '#43b581';
+
+
+
+                    document
+                        .getElementById(
+                            'totalTime'
+                        )
+                        .innerText =
+                            "Süre";
+
+
+
+                    const runGameTicker =
+                        () => {
+
+
+                            const elapsed =
+
+                                Date.now()
+                                -
+                                start;
+
+
+
+                            document
+                                .getElementById(
+                                    'currentTime'
+                                )
+                                .innerText =
+
+                                    formatTime(
+                                        elapsed
+                                    );
+
+
                         };
 
-                        runTicker();
-                        currentTimer = setInterval(runTicker, 1000);
-                    } else if (l.activities && l.activities.find(a => a.type === 0)) {
-                        const game = l.activities.find(a => a.type === 0);
-                        actBox.style.display = 'flex';
-                        actHeader.innerText = "OYNUYOR";
-                        actTitle.innerText = game.name;
-                        actSub.innerText = game.details || game.state || 'Oynuyor';
 
-                        if (game.assets && game.assets.large_image) {
-                            let largeImage = game.assets.large_image;
-                            if (largeImage.startsWith('spotify:')) {
-                                actImg.src = largeImage.replace('spotify:', 'https://i.scdn.co/image/');
-                            } else if (largeImage.startsWith('mp:')) {
-                                actImg.src = `https://media.discordapp.net/${largeImage.replace('mp:', '')}`;
-                            } else {
-                                actImg.src = `https://cdn.discordapp.com/app-assets/${game.application_id}/${largeImage}.png`;
-                            }
-                        } else {
-                            actImg.src = 'https://cdn.discordapp.com/embed/avatars/0.png';
-                        }
 
-                        if (game.timestamps && game.timestamps.start) {
-                            progressContainer.style.display = 'flex';
-                            const start = game.timestamps.start;
-                            document.getElementById('barFill').style.width = '100%';
-                            document.getElementById('barFill').style.background = '#43b581';
-                            document.getElementById('totalTime').innerText = "Süre";
-                            
-                            const runGameTicker = () => {
-                                const elapsed = Date.now() - start;
-                                document.getElementById('currentTime').innerText = formatTime(elapsed);
-                            };
-                            runGameTicker();
-                            currentTimer = setInterval(runGameTicker, 1000);
-                        } else {
-                            progressContainer.style.display = 'none';
-                        }
-                    } else {
-                        actBox.style.display = 'none';
-                    }
+                    runGameTicker();
+
+
+
+                    currentTimer =
+
+                        setInterval(
+                            runGameTicker,
+                            1000
+                        );
+
+
                 }
-            } catch (err) {
-                console.error("Lanyard hatası:", err);
+
+
+                else {
+
+
+                    progressContainer.style.display =
+                        'none';
+
+
+                }
+
+
             }
+
+
+            else {
+
+
+                actBox.style.display =
+                    'none';
+
+
+            }
+
+
         }
 
-        fetchLanyard();
-        setInterval(fetchLanyard, 5000);
 
-        const enterOverlay = document.getElementById('enterOverlay');
-        const bgVideo = document.getElementById('bgVideo');
-        const muteBtn = document.getElementById('muteBtn');
-        const volumeSlider = document.getElementById('volumeSlider');
+    }
 
-        enterOverlay.addEventListener('click', () => {
-            enterOverlay.style.opacity = '0';
-            setTimeout(() => { enterOverlay.style.display = 'none'; }, 500);
+    catch (err) {
 
-            bgVideo.muted = false;
-            bgVideo.volume = volumeSlider.value;
-            bgVideo.play().catch(e => console.log("Oynatma hatası:", e));
-        });
 
-        volumeSlider.addEventListener('input', (e) => {
-            bgVideo.volume = e.target.value;
-            bgVideo.muted = e.target.value == 0;
-            updateVolumeIcon(bgVideo.volume);
-        });
+        console.error(
+            "Lanyard hatası:",
+            err
+        );
 
-        muteBtn.addEventListener('click', () => {
-            if (bgVideo.muted || bgVideo.volume == 0) {
-                bgVideo.muted = false;
-                bgVideo.volume = volumeSlider.value > 0 ? volumeSlider.value : 0.5;
-                volumeSlider.value = bgVideo.volume;
-            } else {
-                bgVideo.muted = true;
-                bgVideo.volume = 0;
-                volumeSlider.value = 0;
-            }
-            updateVolumeIcon(bgVideo.volume);
-        });
 
-        function updateVolumeIcon(vol) {
-            if (vol == 0 || bgVideo.muted) {
-                muteBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
-            } else if (vol < 0.5) {
-                muteBtn.innerHTML = '<i class="fa-solid fa-volume-low"></i>';
-            } else {
-                muteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-            }
+    }
+
+
+}
+
+
+
+/* İlk yükleme */
+
+fetchLanyard();
+
+
+
+/*
+    Discord bilgilerini
+    5 saniyede bir güncelle
+*/
+
+setInterval(
+    fetchLanyard,
+    5000
+);
+
+
+
+/* =============================
+   VIDEO / AUDIO
+============================= */
+
+const enterOverlay =
+
+    document.getElementById(
+        'enterOverlay'
+    );
+
+
+const bgVideo =
+
+    document.getElementById(
+        'bgVideo'
+    );
+
+
+const muteBtn =
+
+    document.getElementById(
+        'muteBtn'
+    );
+
+
+const volumeSlider =
+
+    document.getElementById(
+        'volumeSlider'
+    );
+
+
+
+/* =============================
+   CLICK TO ENTER
+============================= */
+
+enterOverlay.addEventListener(
+
+    'click',
+
+    () => {
+
+
+        enterOverlay.style.opacity =
+            '0';
+
+
+
+        setTimeout(
+
+            () => {
+
+                enterOverlay.style.display =
+                    'none';
+
+            },
+
+            500
+
+        );
+
+
+
+        bgVideo.muted =
+            false;
+
+
+
+        bgVideo.volume =
+            volumeSlider.value;
+
+
+
+        bgVideo.play()
+
+            .catch(e => {
+
+                console.log(
+                    "Oynatma hatası:",
+                    e
+                );
+
+            });
+
+
+    }
+
+);
+
+
+
+/* =============================
+   VOLUME SLIDER
+============================= */
+
+volumeSlider.addEventListener(
+
+    'input',
+
+    (e) => {
+
+
+        bgVideo.volume =
+            e.target.value;
+
+
+        bgVideo.muted =
+            e.target.value == 0;
+
+
+        updateVolumeIcon(
+            bgVideo.volume
+        );
+
+
+    }
+
+);
+
+
+
+/* =============================
+   MUTE BUTTON
+============================= */
+
+muteBtn.addEventListener(
+
+    'click',
+
+    () => {
+
+
+        if (
+            bgVideo.muted
+            ||
+            bgVideo.volume == 0
+        ) {
+
+
+            bgVideo.muted =
+                false;
+
+
+            bgVideo.volume =
+
+                volumeSlider.value > 0
+
+                    ?
+
+                volumeSlider.value
+
+                    :
+
+                0.5;
+
+
+            volumeSlider.value =
+                bgVideo.volume;
+
+
         }
-    </script>
+
+
+        else {
+
+
+            bgVideo.muted =
+                true;
+
+
+            bgVideo.volume =
+                0;
+
+
+            volumeSlider.value =
+                0;
+
+
+        }
+
+
+
+        updateVolumeIcon(
+            bgVideo.volume
+        );
+
+
+    }
+
+);
+
+
+
+/* =============================
+   SES ICON
+============================= */
+
+function updateVolumeIcon(vol) {
+
+
+    if (
+        vol == 0
+        ||
+        bgVideo.muted
+    ) {
+
+
+        muteBtn.innerHTML =
+
+            '<i class="fa-solid fa-volume-xmark"></i>';
+
+
+    }
+
+
+    else if (
+        vol < 0.5
+    ) {
+
+
+        muteBtn.innerHTML =
+
+            '<i class="fa-solid fa-volume-low"></i>';
+
+
+    }
+
+
+    else {
+
+
+        muteBtn.innerHTML =
+
+            '<i class="fa-solid fa-volume-high"></i>';
+
+
+    }
+
+
+}
+
+
+</script>
+
+
 </body>
+
 </html>
