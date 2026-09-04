@@ -241,7 +241,7 @@
     <div class="avatar-container">
         <img id="mainAvatar" class="main-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar">
         <!-- Çerçeve elementine başlangıçta src verilmedi, güvenli hale getirildi -->
-        <img id="avatarFrame" class="avatar-frame" alt="Frame">
+        <img id="avatarFrame" class="avatar-frame" src="<%= user.avatar_decoration_url || '' %>" alt="Frame" style="<%= user.avatar_decoration_url ? 'display: block;' : 'display: none;' %>">
     </div>
 
     <div class="glow-username">
