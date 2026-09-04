@@ -12,44 +12,86 @@ app.use(express.static('public'));
 
 const SETTINGS_FILE = path.join(__dirname, 'settings.json');
 
-const defaultSettings = {
-    bgType: 'color',
-    bgUrl: '#050505',
-    musicUrl: '',
-    bioText: 'Merhaba',
-    adminPassword: '123',
-    viewCount: 14
-};
 
 /* =========================================================
-   SETTINGS
+   DEFAULT SETTINGS
+========================================================= */
+
+const defaultSettings = {
+
+    bgType: 'color',
+
+    bgUrl: '#050505',
+
+    musicUrl: '',
+
+    bioText: 'Merhaba',
+
+    adminPassword: '123',
+
+    viewCount: 14
+
+};
+
+
+/* =========================================================
+   SETTINGS OKU
 ========================================================= */
 
 function getSettings() {
+
     try {
+
         if (!fs.existsSync(SETTINGS_FILE)) {
+
             fs.writeFileSync(
                 SETTINGS_FILE,
-                JSON.stringify(defaultSettings, null, 2),
+                JSON.stringify(
+                    defaultSettings,
+                    null,
+                    2
+                ),
                 'utf8'
             );
 
-            return { ...defaultSettings };
+            return {
+                ...defaultSettings
+            };
+
         }
 
+
         const data = JSON.parse(
-            fs.readFileSync(SETTINGS_FILE, 'utf8')
+            fs.readFileSync(
+                SETTINGS_FILE,
+                'utf8'
+            )
         );
 
+
         return {
+
             ...defaultSettings,
+
             ...data
+
         };
 
+
     } catch (err) {
-        console.error('Settings okuma hatası:', err);
-        return { ...defaultSettings };
+
+        console.error(
+            'Settings okuma hatası:',
+            err
+        );
+
+
+        return {
+            ...defaultSettings
+        };
+
     }
+
 }
 
 
@@ -58,7 +100,9 @@ function getSettings() {
 ========================================================= */
 
 app.get('/', (req, res) => {
+
     res.redirect('/profile');
+
 });
 
 
@@ -68,65 +112,85 @@ app.get('/', (req, res) => {
 
 app.get('/profile', async (req, res) => {
 
-    const settings = getSettings();
+    const settings =
+        getSettings();
+
 
     /*
-        Discord User ID
+        Discord ID
     */
-    const userId = '772859992109875252';
+
+    const userId =
+        '772859992109875252';
+
 
     let user = {
+
         id: userId,
 
-        username: 'morfixcik',
-        global_name: 'Flozzy',
+        username:
+            'morfixcik',
+
+        global_name:
+            'Flozzy',
 
         avatar_url:
             'https://cdn.discordapp.com/embed/avatars/0.png',
 
-        avatar_decoration_url: null,
-        avatar_decoration_data: null,
+        avatar_decoration_url:
+            null
 
-        public_flags: 0,
-
-        primary_guild: null,
-
-        collectibles: null
     };
 
 
     try {
 
-        const response = await fetch(
-            `https://api.lanyard.rest/v1/users/${userId}`
-        );
+        const response =
+            await fetch(
 
-        const result = await response.json();
+                `https://api.lanyard.rest/v1/users/${userId}`
+
+            );
 
 
-        if (result.success && result.data) {
+        const result =
+            await response.json();
 
-            const dUser = result.data.discord_user;
+
+        if (
+            result.success &&
+            result.data
+        ) {
+
+            const dUser =
+                result.data.discord_user;
+
 
             if (dUser) {
+
 
                 /* USERNAME */
 
                 user.username =
-                    dUser.username ||
+
+                    dUser.username
+
+                    ||
+
                     user.username;
 
+
+
+                /* GLOBAL NAME */
+
                 user.global_name =
-                    dUser.global_name ||
+
+                    dUser.global_name
+
+                    ||
+
                     user.global_name;
 
-
-                /* PUBLIC FLAGS */
-
-                user.public_flags =
-                    Number(
-                        dUser.public_flags || 0
-                    );
 
 
                 /* AVATAR */
@@ -134,52 +198,55 @@ app.get('/profile', async (req, res) => {
                 if (dUser.avatar) {
 
                     const ext =
-                        dUser.avatar.startsWith('a_')
-                            ? 'gif'
-                            : 'png';
+
+                        dUser.avatar
+                            .startsWith('a_')
+
+                            ?
+
+                        'gif'
+
+                            :
+
+                        'png';
+
 
                     user.avatar_url =
+
                         `https://cdn.discordapp.com/avatars/${dUser.id}/${dUser.avatar}.${ext}?size=256`;
+
                 }
 
 
-                /* AVATAR DECORATION */
+
+                /* =================================================
+                   SADECE BÜYÜK PROFİL İÇİN DECORATION
+                ================================================= */
 
                 const decorationData =
-                    dUser.avatar_decoration_data ||
+
+                    dUser.avatar_decoration_data
+
+                    ||
+
                     result.data.avatar_decoration_data;
+
 
                 if (
                     decorationData &&
                     decorationData.asset
                 ) {
 
-                    user.avatar_decoration_data =
-                        decorationData;
-
                     user.avatar_decoration_url =
+
                         `https://cdn.discordapp.com/avatar-decoration-presets/${decorationData.asset}.png?size=240&passthrough=true`;
-                }
 
-
-                /* PRIMARY GUILD / SERVER TAG */
-
-                if (dUser.primary_guild) {
-                    user.primary_guild =
-                        dUser.primary_guild;
-                }
-
-
-                /* COLLECTIBLES */
-
-                if (dUser.collectibles) {
-                    user.collectibles =
-                        dUser.collectibles;
                 }
 
             }
 
         }
+
 
     } catch (err) {
 
@@ -191,37 +258,58 @@ app.get('/profile', async (req, res) => {
     }
 
 
-    res.render('profile', {
-        user,
-        settings
-    });
+    res.render(
+        'profile',
+        {
+
+            user,
+
+            settings
+
+        }
+    );
 
 });
 
 
 /* =========================================================
-   VIEW COUNTER
+   PROFILE VIEW COUNTER
 ========================================================= */
 
-app.post('/api/increment-view', (req, res) => {
+app.post(
+    '/api/increment-view',
+    (req, res) => {
 
-    const settings = getSettings();
+        const settings =
+            getSettings();
 
-    settings.viewCount =
-        (settings.viewCount || 14) + 1;
 
-    fs.writeFileSync(
-        SETTINGS_FILE,
-        JSON.stringify(settings, null, 2),
-        'utf8'
-    );
+        settings.viewCount =
+            (settings.viewCount || 14) + 1;
 
-    res.json({
-        success: true,
-        viewCount: settings.viewCount
-    });
 
-});
+        fs.writeFileSync(
+            SETTINGS_FILE,
+            JSON.stringify(
+                settings,
+                null,
+                2
+            ),
+            'utf8'
+        );
+
+
+        res.json({
+
+            success: true,
+
+            viewCount:
+                settings.viewCount
+
+        });
+
+    }
+);
 
 
 /* =========================================================
@@ -230,78 +318,131 @@ app.post('/api/increment-view', (req, res) => {
 
 app.get('/admin', (req, res) => {
 
-    const settings = getSettings();
-
-    res.render('admin', {
-        settings,
-        success: null,
-        error: null
-    });
-
-});
+    const settings =
+        getSettings();
 
 
-app.post('/admin/save', (req, res) => {
+    res.render(
+        'admin',
+        {
 
-    const settings = getSettings();
-
-    const {
-        password,
-        bgType,
-        bgUrl,
-        musicUrl,
-        bioText
-    } = req.body;
-
-
-    if (password !== settings.adminPassword) {
-
-        return res.render('admin', {
             settings,
+
             success: null,
-            error: 'Hatalı Admin Şifresi!'
-        });
 
-    }
+            error: null
 
-
-    settings.bgType =
-        bgType;
-
-    settings.bgUrl =
-        bgUrl || '#050505';
-
-    settings.musicUrl =
-        musicUrl;
-
-    settings.bioText =
-        bioText;
-
-
-    fs.writeFileSync(
-        SETTINGS_FILE,
-        JSON.stringify(settings, null, 2),
-        'utf8'
+        }
     );
 
-
-    res.render('admin', {
-        settings,
-        success: 'Ayarlar başarıyla kaydedildi!',
-        error: null
-    });
-
 });
+
+
+/* =========================================================
+   ADMIN SAVE
+========================================================= */
+
+app.post(
+    '/admin/save',
+    (req, res) => {
+
+        const settings =
+            getSettings();
+
+
+        const {
+
+            password,
+
+            bgType,
+
+            bgUrl,
+
+            musicUrl,
+
+            bioText
+
+        } = req.body;
+
+
+        if (
+            password !==
+            settings.adminPassword
+        ) {
+
+            return res.render(
+                'admin',
+                {
+
+                    settings,
+
+                    success: null,
+
+                    error:
+                        'Hatalı Admin Şifresi!'
+
+                }
+            );
+
+        }
+
+
+        settings.bgType =
+            bgType;
+
+
+        settings.bgUrl =
+            bgUrl || '#050505';
+
+
+        settings.musicUrl =
+            musicUrl;
+
+
+        settings.bioText =
+            bioText;
+
+
+        fs.writeFileSync(
+            SETTINGS_FILE,
+            JSON.stringify(
+                settings,
+                null,
+                2
+            ),
+            'utf8'
+        );
+
+
+        res.render(
+            'admin',
+            {
+
+                settings,
+
+                success:
+                    'Ayarlar başarıyla kaydedildi!',
+
+                error: null
+
+            }
+        );
+
+    }
+);
 
 
 /* =========================================================
    SERVER
 ========================================================= */
 
-app.listen(3000, () => {
+app.listen(
+    3000,
+    () => {
 
-    console.log(
-        'Sunucu aktif: http://localhost:3000/profile'
-    );
+        console.log(
+            'Sunucu aktif: http://localhost:3000/profile'
+        );
 
-});
+    }
+);
