@@ -16,7 +16,7 @@ const defaultSettings = {
     musicUrl: '',
     bioText: "Don't try to figure me out you'll never succeed",
     adminPassword: '123',
-    viewCount: 0
+    viewCount: 14 // Başlangıç değeri
 };
 
 function getSettings() {
@@ -39,8 +39,8 @@ app.get('/', (req, res) => {
 app.get('/profile', (req, res) => {
     const settings = getSettings();
     
-    // Ziyaretçi sayacını artır ve kaydet
-    settings.viewCount = (settings.viewCount || 0) + 1;
+    // Her profile girişte sayaç artar ve kaydedilir
+    settings.viewCount = (settings.viewCount || 14) + 1;
     fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2), 'utf8');
 
     const user = {

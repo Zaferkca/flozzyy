@@ -23,6 +23,35 @@
         }
         .bg-video { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -2; }
 
+        /* Click to Enter Perdesi */
+        #enterOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 5, 5, 0.92);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.5s ease;
+        }
+        .enter-text {
+            font-size: 22px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 1px;
+            animation: pulseText 1.5s infinite alternate;
+        }
+        @keyframes pulseText {
+            0% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
         .avatar-container { 
             position: relative; 
             width: 170px; 
@@ -106,18 +135,63 @@
         .socials a { color: #ffffff; font-size: 26px; text-decoration: none; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)); transition: transform 0.2s; }
         .socials a:hover { transform: scale(1.15); }
 
-        .video-toggle { position: absolute; bottom: 20px; right: 20px; background: rgba(15, 15, 18, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 14px; border-radius: 30px; cursor: pointer; font-size: 12px; backdrop-filter: blur(10px); z-index: 10; }
-        .view-counter { position: absolute; top: 20px; right: 20px; background: rgba(15, 15, 18, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 12px; backdrop-filter: blur(10px); z-index: 10; }
+        /* İstediğin Stil & Konumda Sayaç Kutusu */
+        .view-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(18, 18, 22, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .view-counter span:first-child {
+            font-size: 10px;
+            color: #888;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .view-counter-inner {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+        }
+        .view-counter-inner i {
+            color: #aaa;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="view-counter"><i class="fa-solid fa-eye"></i> Görüntülenme: <%= settings.viewCount %></div>
+    <!-- Click to Enter Ekranı -->
+    <div id="enterOverlay">
+        <div class="enter-text">click to enter...</div>
+    </div>
 
-    <video id="bgVideo" autoplay loop class="bg-video">
+    <!-- İstediğin Tarzda Sağ Üst Sayaç -->
+    <div class="view-counter">
+        <span>Profile Views</span>
+        <div class="view-counter-inner">
+            <i class="fa-solid fa-eye"></i>
+            <span><%= settings.viewCount %></span>
+        </div>
+    </div>
+
+    <video id="bgVideo" loop muted class="bg-video">
         <source src="/Rarity43_pindown.io_1788465739.mp4" type="video/mp4">
     </video>
-    <button id="videoToggleBtn" class="video-toggle"><i class="fa-solid fa-volume-high"></i> Sesi Kapat</button>
 
     <div class="avatar-container">
         <img id="mainAvatar" class="main-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar">
@@ -240,7 +314,6 @@
                         actTitle.innerText = game.name;
                         actSub.innerText = game.details || game.state || 'Oynuyor';
 
-                        // Valorant ve harici oyun görselleri için düzeltilmiş URL kontrolü
                         if (game.assets && game.assets.large_image) {
                             let largeImage = game.assets.large_image;
                             if (largeImage.startsWith('spotify:')) {
@@ -282,28 +355,19 @@
         fetchLanyard();
         setInterval(fetchLanyard, 5000);
 
+        // Sol tık ile giriş yapma ve videonun sesini açıp başlatma
+        const enterOverlay = document.getElementById('enterOverlay');
         const bgVideo = document.getElementById('bgVideo');
-        const videoToggleBtn = document.getElementById('videoToggleBtn');
 
-        // Sayfa açıldığında sesi otomatik açmayı dener, tarayıcı engellerse kullanıcı butona basınca açılır
-        bgVideo.muted = false;
-        bgVideo.play().catch(() => {
-            bgVideo.muted = true;
-            videoToggleBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Sesi Aç';
+        enterOverlay.addEventListener('click', () => {
+            enterOverlay.style.opacity = '0';
+            setTimeout(() => {
+                enterOverlay.style.display = 'none';
+            }, 500);
+
+            bgVideo.muted = false;
+            bgVideo.play().catch(e => console.log("Oynatma hatası:", e));
         });
-
-        if (bgVideo && videoToggleBtn) {
-            videoToggleBtn.addEventListener('click', () => {
-                if (bgVideo.muted) {
-                    bgVideo.muted = false;
-                    bgVideo.play();
-                    videoToggleBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Sesi Kapat';
-                } else {
-                    bgVideo.muted = true;
-                    videoToggleBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Sesi Aç';
-                }
-            });
-        }
     </script>
 </body>
 </html>
