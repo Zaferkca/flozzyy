@@ -15,7 +15,8 @@ const defaultSettings = {
     bgUrl: '#050505',
     musicUrl: '',
     bioText: "Don't try to figure me out you'll never succeed",
-    adminPassword: '123'
+    adminPassword: '123',
+    viewCount: 0
 };
 
 function getSettings() {
@@ -24,7 +25,8 @@ function getSettings() {
             fs.writeFileSync(SETTINGS_FILE, JSON.stringify(defaultSettings, null, 2), 'utf8');
             return defaultSettings;
         }
-        return JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8'));
+        const data = JSON.parse(fs.readFileSync(SETTINGS_FILE, 'utf8'));
+        return { ...defaultSettings, ...data };
     } catch (err) {
         return defaultSettings;
     }
@@ -36,6 +38,11 @@ app.get('/', (req, res) => {
 
 app.get('/profile', (req, res) => {
     const settings = getSettings();
+    
+    // Ziyaretçi sayacını artır ve kaydet
+    settings.viewCount = (settings.viewCount || 0) + 1;
+    fs.writeFileSync(SETTINGS_FILE, JSON.stringify(settings, null, 2), 'utf8');
+
     const user = {
         id: '772859992109875252',
         username: 'morfixcik',

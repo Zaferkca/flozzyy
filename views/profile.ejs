@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= user.global_name || user.username %></title>
-    <!-- Sekmede görünecek ikon -->
     <link rel="icon" type="image/png" href="/ikon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -108,14 +107,17 @@
         .socials a:hover { transform: scale(1.15); }
 
         .video-toggle { position: absolute; bottom: 20px; right: 20px; background: rgba(15, 15, 18, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 8px 14px; border-radius: 30px; cursor: pointer; font-size: 12px; backdrop-filter: blur(10px); z-index: 10; }
+        .view-counter { position: absolute; top: 20px; right: 20px; background: rgba(15, 15, 18, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 12px; backdrop-filter: blur(10px); z-index: 10; }
     </style>
 </head>
 <body>
 
-    <video id="bgVideo" autoplay muted loop class="bg-video">
+    <div class="view-counter"><i class="fa-solid fa-eye"></i> Görüntülenme: <%= settings.viewCount %></div>
+
+    <video id="bgVideo" autoplay loop class="bg-video">
         <source src="/Rarity43_pindown.io_1788465739.mp4" type="video/mp4">
     </video>
-    <button id="videoToggleBtn" class="video-toggle"><i class="fa-solid fa-volume-xmark"></i> Sesi Aç</button>
+    <button id="videoToggleBtn" class="video-toggle"><i class="fa-solid fa-volume-high"></i> Sesi Kapat</button>
 
     <div class="avatar-container">
         <img id="mainAvatar" class="main-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar">
@@ -238,11 +240,16 @@
                         actTitle.innerText = game.name;
                         actSub.innerText = game.details || game.state || 'Oynuyor';
 
+                        // Valorant ve harici oyun görselleri için düzeltilmiş URL kontrolü
                         if (game.assets && game.assets.large_image) {
-                            const imgId = game.assets.large_image.startsWith('spotify:') 
-                                ? game.assets.large_image.replace('spotify:', 'https://i.scdn.co/image/')
-                                : `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png`;
-                            actImg.src = imgId;
+                            let largeImage = game.assets.large_image;
+                            if (largeImage.startsWith('spotify:')) {
+                                actImg.src = largeImage.replace('spotify:', 'https://i.scdn.co/image/');
+                            } else if (largeImage.startsWith('mp:')) {
+                                actImg.src = `https://media.discordapp.net/${largeImage.replace('mp:', '')}`;
+                            } else {
+                                actImg.src = `https://cdn.discordapp.com/app-assets/${game.application_id}/${largeImage}.png`;
+                            }
                         } else {
                             actImg.src = 'https://cdn.discordapp.com/embed/avatars/0.png';
                         }
@@ -277,6 +284,13 @@
 
         const bgVideo = document.getElementById('bgVideo');
         const videoToggleBtn = document.getElementById('videoToggleBtn');
+
+        // Sayfa açıldığında sesi otomatik açmayı dener, tarayıcı engellerse kullanıcı butona basınca açılır
+        bgVideo.muted = false;
+        bgVideo.play().catch(() => {
+            bgVideo.muted = true;
+            videoToggleBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Sesi Aç';
+        });
 
         if (bgVideo && videoToggleBtn) {
             videoToggleBtn.addEventListener('click', () => {
