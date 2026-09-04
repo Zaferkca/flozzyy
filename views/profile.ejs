@@ -1,26 +1,36 @@
 <!DOCTYPE html>
+
 <html lang="tr">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title id="pageTitle">
         Flozzy
     </title>
 
-    <link rel="icon"
-          type="image/png"
-          href="/ikon.png">
+    <link
+        rel="icon"
+        type="image/png"
+        href="/ikon.png"
+    >
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
 
     <style>
 
@@ -30,6 +40,7 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
+
 
         body {
 
@@ -56,8 +67,9 @@
         }
 
 
+
         /* =========================
-           ARKA PLAN VİDEO
+           BACKGROUND
         ========================= */
 
         .bg-video {
@@ -85,8 +97,9 @@
         }
 
 
+
         /* =========================
-           GİRİŞ EKRANI
+           ENTER OVERLAY
         ========================= */
 
         #enterOverlay {
@@ -101,11 +114,14 @@
 
             height: 100vh;
 
-            background: rgba(5, 5, 5, 0.92);
+            background:
+                rgba(5, 5, 5, 0.92);
 
-            backdrop-filter: blur(12px);
+            backdrop-filter:
+                blur(12px);
 
-            -webkit-backdrop-filter: blur(12px);
+            -webkit-backdrop-filter:
+                blur(12px);
 
             z-index: 9999;
 
@@ -119,22 +135,31 @@
 
             cursor: pointer;
 
-            transition: opacity 0.5s ease;
+            transition:
+                opacity 0.5s ease;
 
         }
 
 
         .enter-text {
 
-            font-size: 22px;
+            font-size:
+                22px;
 
-            font-weight: 600;
+            font-weight:
+                600;
 
-            color: #ffffff;
+            color:
+                #ffffff;
 
-            letter-spacing: 1px;
+            letter-spacing:
+                1px;
 
-            animation: pulseText 1.5s infinite alternate;
+            animation:
+                pulseText
+                1.5s
+                infinite
+                alternate;
 
         }
 
@@ -152,17 +177,28 @@
         }
 
 
+
         /* =========================
-           AVATAR
+           AVATAR + DECORATION
         ========================= */
 
         .avatar-container {
 
+            --avatar-size: 110px;
+
+            /*
+                Burayı değiştirerek
+                Discord çerçevesinin
+                büyüklüğünü ayarlayabilirsin.
+            */
+
+            --decoration-size: 132px;
+
             position: relative;
 
-            width: 170px;
+            width: 145px;
 
-            height: 170px;
+            height: 145px;
 
             margin-bottom: 5px;
 
@@ -177,69 +213,89 @@
 
         .main-avatar {
 
-            width: 110px;
-
-            height: 110px;
-
-            border-radius: 50%;
-
-            object-fit: cover;
-
             position: absolute;
-
-            z-index: 1;
-
-        }
-
-
-        /*
-            Discord Avatar Decoration
-
-            Avatarın üzerinde görünür.
-        */
-
-        .avatar-frame {
-
-            position: absolute;
-
-            width: 170px;
-
-            height: 170px;
-
-            object-fit: contain;
-
-            z-index: 2;
-
-            pointer-events: none;
 
             top: 50%;
 
             left: 50%;
 
-            transform: translate(-50%, -50%);
+            width:
+                var(--avatar-size);
 
-            display: none;
+            height:
+                var(--avatar-size);
+
+            transform:
+                translate(-50%, -50%);
+
+            border-radius:
+                50%;
+
+            object-fit:
+                cover;
+
+            z-index:
+                1;
 
         }
 
 
+        .avatar-frame {
+
+            position: absolute;
+
+            top: 50%;
+
+            left: 50%;
+
+            width:
+                var(--decoration-size);
+
+            height:
+                var(--decoration-size);
+
+            transform:
+                translate(-50%, -50%);
+
+            object-fit:
+                contain;
+
+            z-index:
+                2;
+
+            pointer-events:
+                none;
+
+            display:
+                none;
+
+        }
+
+
+
         /* =========================
-           KULLANICI ADI
+           USERNAME
         ========================= */
 
         .glow-username {
 
-            font-size: 36px;
+            font-size:
+                36px;
 
-            font-weight: 800;
+            font-weight:
+                800;
 
-            color: #ffffff;
+            color:
+                #ffffff;
 
-            display: flex;
+            display:
+                flex;
 
-            align-items: center;
+            align-items:
+                center;
 
-            gap: 10px;
+            gap:
+                10px;
 
             text-shadow:
                 0 0 15px rgba(255,255,255,0.8),
@@ -248,49 +304,70 @@
         }
 
 
+
+        /* =========================
+           BIO
+        ========================= */
+
         .bio-text {
 
-            font-size: 14px;
+            font-size:
+                14px;
 
-            color: #cccccc;
+            color:
+                #cccccc;
 
-            margin-bottom: 8px;
+            margin-bottom:
+                8px;
 
-            text-align: center;
+            text-align:
+                center;
 
-            max-width: 400px;
+            max-width:
+                400px;
 
-            padding: 0 15px;
+            padding:
+                0 15px;
 
         }
 
 
+
         /* =========================
-           DISCORD KART
+           DISCORD CARD
         ========================= */
 
         .discord-card {
 
-            background: rgba(18,18,22,0.4);
+            background:
+                rgba(18,18,22,0.4);
 
             border:
                 1px solid rgba(255,255,255,0.1);
 
-            backdrop-filter: blur(18px);
+            backdrop-filter:
+                blur(18px);
 
-            -webkit-backdrop-filter: blur(18px);
+            -webkit-backdrop-filter:
+                blur(18px);
 
-            border-radius: 20px;
+            border-radius:
+                20px;
 
-            padding: 18px 22px;
+            padding:
+                18px 22px;
 
-            width: 390px;
+            width:
+                390px;
 
-            display: flex;
+            display:
+                flex;
 
-            flex-direction: column;
+            flex-direction:
+                column;
 
-            gap: 12px;
+            gap:
+                12px;
 
             box-shadow:
                 0 20px 40px rgba(0,0,0,0.5);
@@ -300,94 +377,122 @@
 
         .card-top {
 
-            display: flex;
+            display:
+                flex;
 
-            align-items: center;
+            align-items:
+                center;
 
-            gap: 14px;
+            gap:
+                14px;
 
         }
 
 
         .card-avatar-wrapper {
 
-            position: relative;
+            position:
+                relative;
 
-            width: 58px;
+            width:
+                58px;
 
-            height: 58px;
+            height:
+                58px;
 
-            flex-shrink: 0;
+            flex-shrink:
+                0;
 
         }
 
 
         .card-avatar {
 
-            width: 100%;
+            width:
+                100%;
 
-            height: 100%;
+            height:
+                100%;
 
-            border-radius: 50%;
+            border-radius:
+                50%;
 
-            object-fit: cover;
+            object-fit:
+                cover;
 
-            background-color: #1a1a20;
+            background-color:
+                #1a1a20;
 
         }
 
 
         .status-dot {
 
-            width: 15px;
+            width:
+                15px;
 
-            height: 15px;
+            height:
+                15px;
 
-            border-radius: 50%;
+            border-radius:
+                50%;
 
-            position: absolute;
+            position:
+                absolute;
 
-            bottom: 0;
+            bottom:
+                0;
 
-            right: 0;
+            right:
+                0;
 
             border:
                 3px solid #0f0f12;
 
-            background-color: #747f8d;
+            background-color:
+                #747f8d;
 
         }
 
 
         .card-user-info {
 
-            display: flex;
+            display:
+                flex;
 
-            flex-direction: column;
+            flex-direction:
+                column;
 
         }
 
 
         .card-username {
 
-            font-size: 17px;
+            font-size:
+                17px;
 
-            font-weight: 700;
+            font-weight:
+                700;
 
-            color: #ffffff;
+            color:
+                #ffffff;
 
         }
 
 
         .card-status-text {
 
-            font-size: 13px;
+            font-size:
+                13px;
 
-            color: #b0b0b0;
+            color:
+                #b0b0b0;
 
-            font-style: italic;
+            font-style:
+                italic;
 
         }
+
 
 
         /* =========================
@@ -396,7 +501,8 @@
 
         .activity-box {
 
-            display: none;
+            display:
+                none;
 
             background:
                 rgba(18,18,22,0.35);
@@ -404,195 +510,255 @@
             border:
                 1px solid rgba(255,255,255,0.08);
 
-            backdrop-filter: blur(10px);
+            backdrop-filter:
+                blur(10px);
 
-            -webkit-backdrop-filter: blur(10px);
+            -webkit-backdrop-filter:
+                blur(10px);
 
-            border-radius: 14px;
+            border-radius:
+                14px;
 
-            padding: 12px;
+            padding:
+                12px;
 
-            flex-direction: column;
+            flex-direction:
+                column;
 
-            gap: 8px;
+            gap:
+                8px;
 
         }
 
 
         .activity-header {
 
-            font-size: 11px;
+            font-size:
+                11px;
 
-            font-weight: 700;
+            font-weight:
+                700;
 
-            color: #a0a0a5;
+            color:
+                #a0a0a5;
 
-            letter-spacing: 0.5px;
+            letter-spacing:
+                0.5px;
 
-            margin-bottom: 2px;
+            margin-bottom:
+                2px;
 
         }
 
 
         .activity-main {
 
-            display: flex;
+            display:
+                flex;
 
-            align-items: center;
+            align-items:
+                center;
 
-            gap: 12px;
+            gap:
+                12px;
 
-            width: 100%;
+            width:
+                100%;
 
         }
 
 
         .activity-album {
 
-            width: 50px;
+            width:
+                50px;
 
-            height: 50px;
+            height:
+                50px;
 
-            border-radius: 10px;
+            border-radius:
+                10px;
 
-            object-fit: cover;
+            object-fit:
+                cover;
 
-            flex-shrink: 0;
+            flex-shrink:
+                0;
 
         }
 
 
         .activity-details {
 
-            display: flex;
+            display:
+                flex;
 
-            flex-direction: column;
+            flex-direction:
+                column;
 
-            overflow: hidden;
+            overflow:
+                hidden;
 
-            width: 100%;
+            width:
+                100%;
 
         }
 
 
         .activity-title {
 
-            font-size: 13px;
+            font-size:
+                13px;
 
-            font-weight: 700;
+            font-weight:
+                700;
 
-            color: #ffffff;
+            color:
+                #ffffff;
 
-            white-space: nowrap;
+            white-space:
+                nowrap;
 
-            overflow: hidden;
+            overflow:
+                hidden;
 
-            text-overflow: ellipsis;
+            text-overflow:
+                ellipsis;
 
         }
 
 
         .activity-sub {
 
-            font-size: 12px;
+            font-size:
+                12px;
 
-            color: #b3b3b3;
+            color:
+                #b3b3b3;
 
-            white-space: nowrap;
+            white-space:
+                nowrap;
 
-            overflow: hidden;
+            overflow:
+                hidden;
 
-            text-overflow: ellipsis;
+            text-overflow:
+                ellipsis;
 
         }
 
 
+
         /* =========================
-           PROGRESS
+           PROGRESS BAR
         ========================= */
 
         .progress-container {
 
-            width: 100%;
+            width:
+                100%;
 
-            display: flex;
+            display:
+                flex;
 
-            align-items: center;
+            align-items:
+                center;
 
-            gap: 8px;
+            gap:
+                8px;
 
-            margin-top: 4px;
+            margin-top:
+                4px;
 
         }
 
 
         .time-text {
 
-            font-size: 11px;
+            font-size:
+                11px;
 
-            color: #888888;
+            color:
+                #888888;
 
-            font-family: monospace;
+            font-family:
+                monospace;
 
-            white-space: nowrap;
+            white-space:
+                nowrap;
 
         }
 
 
         .bar-bg {
 
-            flex-grow: 1;
+            flex-grow:
+                1;
 
-            height: 5px;
+            height:
+                5px;
 
             background:
                 rgba(255,255,255,0.1);
 
-            border-radius: 3px;
+            border-radius:
+                3px;
 
-            overflow: hidden;
+            overflow:
+                hidden;
 
         }
 
 
         .bar-fill {
 
-            height: 100%;
+            height:
+                100%;
 
-            background: #43b581;
+            background:
+                #43b581;
 
-            width: 0%;
+            width:
+                0%;
 
             transition:
                 width 0.3s linear;
 
-            border-radius: 3px;
+            border-radius:
+                3px;
 
         }
 
 
+
         /* =========================
-           SOSYAL MEDYA
+           SOCIALS
         ========================= */
 
         .socials {
 
-            display: flex;
+            display:
+                flex;
 
-            gap: 20px;
+            gap:
+                20px;
 
-            margin-top: 8px;
+            margin-top:
+                8px;
 
         }
 
 
         .socials a {
 
-            color: #ffffff;
+            color:
+                #ffffff;
 
-            font-size: 24px;
+            font-size:
+                24px;
 
-            text-decoration: none;
+            text-decoration:
+                none;
 
             filter:
                 drop-shadow(
@@ -614,17 +780,21 @@
         }
 
 
+
         /* =========================
            VIEW COUNTER
         ========================= */
 
         .view-counter {
 
-            position: absolute;
+            position:
+                absolute;
 
-            top: 20px;
+            top:
+                20px;
 
-            right: 20px;
+            right:
+                20px;
 
             background:
                 rgba(18,18,22,0.65);
@@ -638,7 +808,8 @@
             -webkit-backdrop-filter:
                 blur(12px);
 
-            color: #fff;
+            color:
+                #fff;
 
             padding:
                 8px 18px;
@@ -718,8 +889,9 @@
         }
 
 
+
         /* =========================
-           SES
+           AUDIO
         ========================= */
 
         .audio-control {
@@ -814,23 +986,22 @@
 <body>
 
 
-<!-- =============================
-     CLICK TO ENTER
-============================= -->
+
+<!-- ENTER -->
 
 <div id="enterOverlay">
 
     <div class="enter-text">
+
         click to enter...
+
     </div>
 
 </div>
 
 
 
-<!-- =============================
-     VIEW COUNTER
-============================= -->
+<!-- VIEW COUNTER -->
 
 <div class="view-counter">
 
@@ -843,7 +1014,9 @@
         <i class="fa-solid fa-eye"></i>
 
         <span id="viewCountDisplay">
+
             <%= settings.viewCount %>
+
         </span>
 
     </div>
@@ -852,9 +1025,7 @@
 
 
 
-<!-- =============================
-     BACKGROUND VIDEO
-============================= -->
+<!-- BACKGROUND VIDEO -->
 
 <video
     id="bgVideo"
@@ -873,9 +1044,7 @@
 
 
 
-<!-- =============================
-     AUDIO CONTROL
-============================= -->
+<!-- AUDIO -->
 
 <div class="audio-control">
 
@@ -899,13 +1068,10 @@
 
 
 
-<!-- =============================
-     ANA AVATAR
-============================= -->
+<!-- AVATAR -->
 
 <div class="avatar-container">
 
-    <!-- Discord Avatar -->
 
     <img
         id="mainAvatar"
@@ -915,27 +1081,22 @@
     >
 
 
-    <!-- Discord Avatar Decoration -->
-
     <img
         id="avatarFrame"
         class="avatar-frame"
         src="<%= user.avatar_decoration_url || '' %>"
         alt=""
-        style="<%= user.avatar_decoration_url
-            ? 'display:block;'
-            : 'display:none;' %>"
+        style="<%= user.avatar_decoration_url ? 'display:block;' : 'display:none;' %>"
         onload="this.style.display='block'"
         onerror="this.style.display='none'"
     >
+
 
 </div>
 
 
 
-<!-- =============================
-     USERNAME
-============================= -->
+<!-- USERNAME -->
 
 <div class="glow-username">
 
@@ -949,9 +1110,7 @@
 
 
 
-<!-- =============================
-     BIO
-============================= -->
+<!-- BIO -->
 
 <div class="bio-text">
 
@@ -961,9 +1120,7 @@
 
 
 
-<!-- =============================
-     DISCORD CARD
-============================= -->
+<!-- DISCORD CARD -->
 
 <div class="discord-card">
 
@@ -973,6 +1130,7 @@
 
         <div class="card-avatar-wrapper">
 
+
             <img
                 id="cardAvatar"
                 class="card-avatar"
@@ -980,15 +1138,19 @@
                 alt="Avatar"
             >
 
+
             <div
                 id="statusDot"
                 class="status-dot"
             ></div>
 
+
         </div>
 
 
+
         <div class="card-user-info">
+
 
             <span class="card-username">
 
@@ -1005,6 +1167,7 @@
                 Yükleniyor...
 
             </span>
+
 
         </div>
 
@@ -1031,6 +1194,7 @@
         </div>
 
 
+
         <div class="activity-main">
 
 
@@ -1049,7 +1213,9 @@
                     id="activityTitle"
                     class="activity-title"
                 >
+
                     ...
+
                 </span>
 
 
@@ -1057,7 +1223,9 @@
                     id="activitySub"
                     class="activity-sub"
                 >
+
                     ...
+
                 </span>
 
 
@@ -1079,7 +1247,9 @@
                 id="currentTime"
                 class="time-text"
             >
+
                 0:00
+
             </span>
 
 
@@ -1097,7 +1267,9 @@
                 id="totalTime"
                 class="time-text"
             >
+
                 Süre
+
             </span>
 
 
@@ -1111,9 +1283,7 @@
 
 
 
-<!-- =============================
-     SOCIAL
-============================= -->
+<!-- SOCIALS -->
 
 <div class="socials">
 
@@ -1146,7 +1316,7 @@
 
 
 /* =============================
-   TITLE ANIMATION
+   TITLE
 ============================= */
 
 let titleText =
@@ -1159,12 +1329,14 @@ let titleIndex =
 function marqueeTitle() {
 
     document.title =
+
         titleText.substring(titleIndex)
         +
         titleText.substring(
             0,
             titleIndex
         );
+
 
     titleIndex =
         (titleIndex + 1)
@@ -1182,7 +1354,7 @@ setInterval(
 
 
 /* =============================
-   USER ID
+   USER
 ============================= */
 
 const userId =
@@ -1204,6 +1376,7 @@ if (
     )
 ) {
 
+
     localStorage.setItem(
         'flozzy_visited',
         'true'
@@ -1223,37 +1396,45 @@ if (
 
     .then(data => {
 
+
         if (data.success) {
 
+
             document
-            .getElementById(
-                'viewCountDisplay'
-            )
-            .innerText =
-                data.viewCount;
+                .getElementById(
+                    'viewCountDisplay'
+                )
+                .innerText =
+                    data.viewCount;
+
 
         }
+
 
     })
 
     .catch(err => {
+
 
         console.error(
             "Sayaç hatası:",
             err
         );
 
+
     });
+
 
 }
 
 
 
 /* =============================
-   ZAMAN FORMAT
+   TIME FORMAT
 ============================= */
 
 function formatTime(ms) {
+
 
     const totalSeconds =
         Math.floor(
@@ -1273,6 +1454,7 @@ function formatTime(ms) {
 
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
+
 }
 
 
@@ -1282,6 +1464,7 @@ function formatTime(ms) {
 ============================= */
 
 async function fetchLanyard() {
+
 
     try {
 
@@ -1316,7 +1499,7 @@ async function fetchLanyard() {
 
 
             /* =============================
-               DISCORD AVATAR
+               AVATAR
             ============================= */
 
             if (
@@ -1328,12 +1511,15 @@ async function fetchLanyard() {
 
                 const ext =
 
-                    discordUser.avatar
-                        .startsWith('a_')
+                    discordUser.avatar.startsWith('a_')
 
-                        ? 'gif'
+                        ?
 
-                        : 'png';
+                    'gif'
+
+                        :
+
+                    'png';
 
 
 
@@ -1365,14 +1551,15 @@ async function fetchLanyard() {
 
 
             /* =============================
-               DISCORD AVATAR DECORATION
+               AVATAR DECORATION
             ============================= */
 
             const avatarFrame =
 
-                document.getElementById(
-                    'avatarFrame'
-                );
+                document
+                    .getElementById(
+                        'avatarFrame'
+                    );
 
 
 
@@ -1409,7 +1596,16 @@ async function fetchLanyard() {
 
 
                 /*
-                    Önce URL'yi ver.
+                    Önce gizli tut.
+                */
+
+                avatarFrame.style.display =
+                    'none';
+
+
+
+                /*
+                    Kaynağı ata.
                 */
 
                 avatarFrame.src =
@@ -1418,42 +1614,40 @@ async function fetchLanyard() {
 
 
                 /*
-                    Resim yüklenince göster.
+                    Yüklendiğinde göster.
                 */
 
                 avatarFrame.onload =
                     function () {
 
+
                         avatarFrame.style.display =
                             'block';
+
 
                     };
 
 
 
                 /*
-                    Link bozuksa gizle.
-
-                    Böylece ekranda "Frame"
-                    yazısı çıkmaz.
+                    Yüklenmezse gizli kalsın.
                 */
 
                 avatarFrame.onerror =
                     function () {
 
+
                         avatarFrame.style.display =
                             'none';
+
 
                     };
 
 
-                console.log(
-                    "Discord Decoration:",
-                    decorationUrl
-                );
+            }
 
 
-            } else {
+            else {
 
 
                 avatarFrame.style.display =
@@ -1465,30 +1659,36 @@ async function fetchLanyard() {
 
 
             /* =============================
-               DISCORD STATUS
+               STATUS
             ============================= */
 
             const statusDot =
 
-                document.getElementById(
-                    'statusDot'
-                );
+                document
+                    .getElementById(
+                        'statusDot'
+                    );
 
 
 
             const colors = {
 
+
                 online:
                     '#43b581',
+
 
                 idle:
                     '#faa61a',
 
+
                 dnd:
                     '#f04747',
 
+
                 offline:
                     '#747f8d'
+
 
             };
 
@@ -1512,9 +1712,10 @@ async function fetchLanyard() {
 
             const customStatus =
 
-                document.getElementById(
-                    'customStatus'
-                );
+                document
+                    .getElementById(
+                        'customStatus'
+                    );
 
 
 
@@ -1551,57 +1752,65 @@ async function fetchLanyard() {
 
 
             /* =============================
-               ACTIVITY ELEMENTS
+               ACTIVITY
             ============================= */
 
             const actBox =
 
-                document.getElementById(
-                    'activityBox'
-                );
+                document
+                    .getElementById(
+                        'activityBox'
+                    );
 
 
             const actHeader =
 
-                document.getElementById(
-                    'activityHeader'
-                );
+                document
+                    .getElementById(
+                        'activityHeader'
+                    );
 
 
             const actImg =
 
-                document.getElementById(
-                    'activityImg'
-                );
+                document
+                    .getElementById(
+                        'activityImg'
+                    );
 
 
             const actTitle =
 
-                document.getElementById(
-                    'activityTitle'
-                );
+                document
+                    .getElementById(
+                        'activityTitle'
+                    );
 
 
             const actSub =
 
-                document.getElementById(
-                    'activitySub'
-                );
+                document
+                    .getElementById(
+                        'activitySub'
+                    );
 
 
             const progressContainer =
 
-                document.getElementById(
-                    'progressContainer'
-                );
+                document
+                    .getElementById(
+                        'progressContainer'
+                    );
 
 
 
             if (currentTimer) {
 
+
                 clearInterval(
                     currentTimer
                 );
+
 
             }
 
@@ -1636,7 +1845,6 @@ async function fetchLanyard() {
 
                 actSub.innerText =
                     l.spotify.artist;
-
 
 
                 progressContainer.style.display =
@@ -1742,6 +1950,7 @@ async function fetchLanyard() {
 
 
                 currentTimer =
+
                     setInterval(
                         runTicker,
                         1000
@@ -1751,8 +1960,9 @@ async function fetchLanyard() {
             }
 
 
+
             /* =============================
-               GAME ACTIVITY
+               GAME
             ============================= */
 
             else if (
@@ -1776,15 +1986,12 @@ async function fetchLanyard() {
                     'flex';
 
 
-
                 actHeader.innerText =
                     "OYNUYOR";
 
 
-
                 actTitle.innerText =
                     game.name;
-
 
 
                 actSub.innerText =
@@ -1801,9 +2008,7 @@ async function fetchLanyard() {
 
 
 
-                /* =============================
-                   GAME IMAGE
-                ============================= */
+                /* GAME IMAGE */
 
                 if (
                     game.assets
@@ -1879,9 +2084,7 @@ async function fetchLanyard() {
 
 
 
-                /* =============================
-                   GAME TIMER
-                ============================= */
+                /* GAME TIMER */
 
                 if (
                     game.timestamps
@@ -1892,7 +2095,6 @@ async function fetchLanyard() {
 
                     progressContainer.style.display =
                         'flex';
-
 
 
                     const start =
@@ -1957,7 +2159,6 @@ async function fetchLanyard() {
                     runGameTicker();
 
 
-
                     currentTimer =
 
                         setInterval(
@@ -1997,6 +2198,7 @@ async function fetchLanyard() {
 
     }
 
+
     catch (err) {
 
 
@@ -2013,16 +2215,8 @@ async function fetchLanyard() {
 
 
 
-/* İlk yükleme */
-
 fetchLanyard();
 
-
-
-/*
-    Discord bilgilerini
-    5 saniyede bir güncelle
-*/
 
 setInterval(
     fetchLanyard,
@@ -2032,41 +2226,43 @@ setInterval(
 
 
 /* =============================
-   VIDEO / AUDIO
+   VIDEO AUDIO
 ============================= */
 
 const enterOverlay =
 
-    document.getElementById(
-        'enterOverlay'
-    );
+    document
+        .getElementById(
+            'enterOverlay'
+        );
 
 
 const bgVideo =
 
-    document.getElementById(
-        'bgVideo'
-    );
+    document
+        .getElementById(
+            'bgVideo'
+        );
 
 
 const muteBtn =
 
-    document.getElementById(
-        'muteBtn'
-    );
+    document
+        .getElementById(
+            'muteBtn'
+        );
 
 
 const volumeSlider =
 
-    document.getElementById(
-        'volumeSlider'
-    );
+    document
+        .getElementById(
+            'volumeSlider'
+        );
 
 
 
-/* =============================
-   CLICK TO ENTER
-============================= */
+/* ENTER */
 
 enterOverlay.addEventListener(
 
@@ -2079,13 +2275,14 @@ enterOverlay.addEventListener(
             '0';
 
 
-
         setTimeout(
 
             () => {
 
+
                 enterOverlay.style.display =
                     'none';
+
 
             },
 
@@ -2094,25 +2291,24 @@ enterOverlay.addEventListener(
         );
 
 
-
         bgVideo.muted =
             false;
-
 
 
         bgVideo.volume =
             volumeSlider.value;
 
 
-
         bgVideo.play()
 
             .catch(e => {
+
 
                 console.log(
                     "Oynatma hatası:",
                     e
                 );
+
 
             });
 
@@ -2123,9 +2319,7 @@ enterOverlay.addEventListener(
 
 
 
-/* =============================
-   VOLUME SLIDER
-============================= */
+/* VOLUME */
 
 volumeSlider.addEventListener(
 
@@ -2153,9 +2347,7 @@ volumeSlider.addEventListener(
 
 
 
-/* =============================
-   MUTE BUTTON
-============================= */
+/* MUTE */
 
 muteBtn.addEventListener(
 
@@ -2213,7 +2405,6 @@ muteBtn.addEventListener(
         }
 
 
-
         updateVolumeIcon(
             bgVideo.volume
         );
@@ -2225,9 +2416,7 @@ muteBtn.addEventListener(
 
 
 
-/* =============================
-   SES ICON
-============================= */
+/* ICON */
 
 function updateVolumeIcon(vol) {
 
@@ -2240,7 +2429,6 @@ function updateVolumeIcon(vol) {
 
 
         muteBtn.innerHTML =
-
             '<i class="fa-solid fa-volume-xmark"></i>';
 
 
@@ -2253,7 +2441,6 @@ function updateVolumeIcon(vol) {
 
 
         muteBtn.innerHTML =
-
             '<i class="fa-solid fa-volume-low"></i>';
 
 
@@ -2264,7 +2451,6 @@ function updateVolumeIcon(vol) {
 
 
         muteBtn.innerHTML =
-
             '<i class="fa-solid fa-volume-high"></i>';
 
 

@@ -83,15 +83,14 @@ app.get('/profile', async (req, res) => {
                 user.global_name =
                     dUser.global_name || user.global_name;
 
-                /*
-                    DISCORD AVATAR DECORATION
-                */
-
                 const decoData =
                     dUser.avatar_decoration_data ||
                     result.data.avatar_decoration_data;
 
-                if (decoData && decoData.asset) {
+                if (
+                    decoData &&
+                    decoData.asset
+                ) {
 
                     user.avatar_decoration_url =
                         `https://cdn.discordapp.com/avatar-decoration-presets/${decoData.asset}.png?size=240&passthrough=true`;
@@ -104,7 +103,7 @@ app.get('/profile', async (req, res) => {
                 } else {
 
                     console.log(
-                        "Bu kullanıcıda avatar decoration bulunamadı."
+                        "Avatar decoration bulunamadı."
                     );
 
                 }
@@ -129,9 +128,6 @@ app.get('/profile', async (req, res) => {
 
 });
 
-/*
-    PROFİL GÖRÜNTÜLENME SAYACI
-*/
 
 app.post('/api/increment-view', (req, res) => {
 
@@ -153,9 +149,6 @@ app.post('/api/increment-view', (req, res) => {
 
 });
 
-/*
-    ADMIN PANEL
-*/
 
 app.get('/admin', (req, res) => {
 
@@ -168,6 +161,7 @@ app.get('/admin', (req, res) => {
     });
 
 });
+
 
 app.post('/admin/save', (req, res) => {
 
@@ -216,9 +210,6 @@ app.post('/admin/save', (req, res) => {
 
 });
 
-/*
-    SUNUCU
-*/
 
 app.listen(3000, () => {
 
