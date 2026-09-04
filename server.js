@@ -16,22 +16,18 @@ const defaultSettings = {
     bgType: 'color',
     bgUrl: '#050505',
     musicUrl: '',
-    bioText: "Merhaba",
+    bioText: 'Merhaba',
     adminPassword: '123',
     viewCount: 14
 };
-
 
 /* =========================================================
    SETTINGS
 ========================================================= */
 
 function getSettings() {
-
     try {
-
         if (!fs.existsSync(SETTINGS_FILE)) {
-
             fs.writeFileSync(
                 SETTINGS_FILE,
                 JSON.stringify(defaultSettings, null, 2),
@@ -51,12 +47,7 @@ function getSettings() {
         };
 
     } catch (err) {
-
-        console.error(
-            'Settings okuma hatası:',
-            err
-        );
-
+        console.error('Settings okuma hatası:', err);
         return { ...defaultSettings };
     }
 }
@@ -67,9 +58,7 @@ function getSettings() {
 ========================================================= */
 
 app.get('/', (req, res) => {
-
     res.redirect('/profile');
-
 });
 
 
@@ -82,26 +71,27 @@ app.get('/profile', async (req, res) => {
     const settings = getSettings();
 
     /*
-        DISCORD USER ID
+        Discord User ID
     */
-
     const userId = '772859992109875252';
 
-
     let user = {
-
         id: userId,
 
         username: 'morfixcik',
-
         global_name: 'Flozzy',
 
         avatar_url:
             'https://cdn.discordapp.com/embed/avatars/0.png',
 
         avatar_decoration_url: null,
+        avatar_decoration_data: null,
 
-        public_flags: 0
+        public_flags: 0,
+
+        primary_guild: null,
+
+        collectibles: null
     };
 
 
@@ -114,42 +104,32 @@ app.get('/profile', async (req, res) => {
         const result = await response.json();
 
 
-        if (
-            result.success &&
-            result.data
-        ) {
+        if (result.success && result.data) {
 
-            const dUser =
-                result.data.discord_user;
-
+            const dUser = result.data.discord_user;
 
             if (dUser) {
 
-                /* ==============================
-                   USERNAME
-                ============================== */
+                /* USERNAME */
 
                 user.username =
                     dUser.username ||
                     user.username;
-
 
                 user.global_name =
                     dUser.global_name ||
                     user.global_name;
 
 
-                /* ==============================
-                   PUBLIC FLAGS / BADGES
-                ============================== */
+                /* PUBLIC FLAGS */
 
                 user.public_flags =
-                    Number(dUser.public_flags || 0);
+                    Number(
+                        dUser.public_flags || 0
+                    );
 
 
-                /* ==============================
-                   AVATAR
-                ============================== */
+                /* AVATAR */
 
                 if (dUser.avatar) {
 
@@ -158,34 +138,43 @@ app.get('/profile', async (req, res) => {
                             ? 'gif'
                             : 'png';
 
-
                     user.avatar_url =
                         `https://cdn.discordapp.com/avatars/${dUser.id}/${dUser.avatar}.${ext}?size=256`;
-
                 }
 
 
-                /* ==============================
-                   AVATAR DECORATION
-                ============================== */
+                /* AVATAR DECORATION */
 
                 const decorationData =
-
-                    dUser.avatar_decoration_data
-
-                    ||
-
+                    dUser.avatar_decoration_data ||
                     result.data.avatar_decoration_data;
-
 
                 if (
                     decorationData &&
                     decorationData.asset
                 ) {
 
+                    user.avatar_decoration_data =
+                        decorationData;
+
                     user.avatar_decoration_url =
                         `https://cdn.discordapp.com/avatar-decoration-presets/${decorationData.asset}.png?size=240&passthrough=true`;
+                }
 
+
+                /* PRIMARY GUILD / SERVER TAG */
+
+                if (dUser.primary_guild) {
+                    user.primary_guild =
+                        dUser.primary_guild;
+                }
+
+
+                /* COLLECTIBLES */
+
+                if (dUser.collectibles) {
+                    user.collectibles =
+                        dUser.collectibles;
                 }
 
             }
@@ -202,51 +191,37 @@ app.get('/profile', async (req, res) => {
     }
 
 
-    res.render(
-        'profile',
-        {
-            user,
-            settings
-        }
-    );
+    res.render('profile', {
+        user,
+        settings
+    });
 
 });
 
 
 /* =========================================================
-   PROFILE VIEW COUNTER
+   VIEW COUNTER
 ========================================================= */
 
-app.post(
-    '/api/increment-view',
-    (req, res) => {
+app.post('/api/increment-view', (req, res) => {
 
-        const settings =
-            getSettings();
+    const settings = getSettings();
 
+    settings.viewCount =
+        (settings.viewCount || 14) + 1;
 
-        settings.viewCount =
-            (settings.viewCount || 14) + 1;
+    fs.writeFileSync(
+        SETTINGS_FILE,
+        JSON.stringify(settings, null, 2),
+        'utf8'
+    );
 
+    res.json({
+        success: true,
+        viewCount: settings.viewCount
+    });
 
-        fs.writeFileSync(
-            SETTINGS_FILE,
-            JSON.stringify(settings, null, 2),
-            'utf8'
-        );
-
-
-        res.json({
-
-            success: true,
-
-            viewCount:
-                settings.viewCount
-
-        });
-
-    }
-);
+});
 
 
 /* =========================================================
@@ -255,124 +230,78 @@ app.post(
 
 app.get('/admin', (req, res) => {
 
-    const settings =
-        getSettings();
+    const settings = getSettings();
 
-
-    res.render(
-        'admin',
-        {
-
-            settings,
-
-            success: null,
-
-            error: null
-
-        }
-    );
+    res.render('admin', {
+        settings,
+        success: null,
+        error: null
+    });
 
 });
 
 
-app.post(
-    '/admin/save',
-    (req, res) => {
+app.post('/admin/save', (req, res) => {
 
-        const settings =
-            getSettings();
+    const settings = getSettings();
 
-
-        const {
-
-            password,
-
-            bgType,
-
-            bgUrl,
-
-            musicUrl,
-
-            bioText
-
-        } = req.body;
+    const {
+        password,
+        bgType,
+        bgUrl,
+        musicUrl,
+        bioText
+    } = req.body;
 
 
-        if (
-            password !==
-            settings.adminPassword
-        ) {
+    if (password !== settings.adminPassword) {
 
-            return res.render(
-                'admin',
-                {
-
-                    settings,
-
-                    success: null,
-
-                    error:
-                        'Hatalı Admin Şifresi!'
-
-                }
-            );
-
-        }
-
-
-        settings.bgType =
-            bgType;
-
-
-        settings.bgUrl =
-            bgUrl ||
-            '#050505';
-
-
-        settings.musicUrl =
-            musicUrl;
-
-
-        settings.bioText =
-            bioText;
-
-
-        fs.writeFileSync(
-            SETTINGS_FILE,
-            JSON.stringify(settings, null, 2),
-            'utf8'
-        );
-
-
-        res.render(
-            'admin',
-            {
-
-                settings,
-
-                success:
-                    'Ayarlar başarıyla kaydedildi!',
-
-                error: null
-
-            }
-        );
+        return res.render('admin', {
+            settings,
+            success: null,
+            error: 'Hatalı Admin Şifresi!'
+        });
 
     }
-);
+
+
+    settings.bgType =
+        bgType;
+
+    settings.bgUrl =
+        bgUrl || '#050505';
+
+    settings.musicUrl =
+        musicUrl;
+
+    settings.bioText =
+        bioText;
+
+
+    fs.writeFileSync(
+        SETTINGS_FILE,
+        JSON.stringify(settings, null, 2),
+        'utf8'
+    );
+
+
+    res.render('admin', {
+        settings,
+        success: 'Ayarlar başarıyla kaydedildi!',
+        error: null
+    });
+
+});
 
 
 /* =========================================================
    SERVER
 ========================================================= */
 
-app.listen(
-    3000,
-    () => {
+app.listen(3000, () => {
 
-        console.log(
-            'Sunucu aktif: http://localhost:3000/profile'
-        );
+    console.log(
+        'Sunucu aktif: http://localhost:3000/profile'
+    );
 
-    }
-);
+});
