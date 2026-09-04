@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= user.global_name || user.username %></title>
+    <title id="pageTitle">Flozzy</title>
     <link rel="icon" type="image/png" href="/ikon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -89,19 +89,19 @@
 
         .bio-text { font-size: 14px; color: #cccccc; margin-bottom: 8px; text-align: center; max-width: 400px; padding: 0 15px; }
 
-        /* Daha Saydam ve Şık Discord Kartı Tasarımı */
+        /* Discord Kartı - Saydam ve Modern Tasarım */
         .discord-card {
-            background: rgba(15, 15, 18, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(18, 18, 22, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             border-radius: 20px;
             padding: 18px 22px;
             width: 390px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
         .card-top { display: flex; align-items: center; gap: 14px; }
         .card-avatar-wrapper { position: relative; width: 58px; height: 58px; flex-shrink: 0; }
@@ -111,10 +111,13 @@
         .card-username { font-size: 17px; font-weight: 700; color: #ffffff; }
         .card-status-text { font-size: 13px; color: #b0b0b0; font-style: italic; }
 
+        /* Orta Kısım - Sayaç Tasarımıyla Uyumlu Daha Saydam Alan */
         .activity-box {
             display: none;
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(18, 18, 22, 0.35);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 14px;
             padding: 12px;
             flex-direction: column;
@@ -136,7 +139,7 @@
         .socials a { color: #ffffff; font-size: 24px; text-decoration: none; filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6)); transition: transform 0.2s; }
         .socials a:hover { transform: scale(1.15); }
 
-        /* Sağ üst sayac kutusu */
+        /* Sağ Üst Sayaç Kutusu */
         .view-counter {
             position: absolute;
             top: 20px;
@@ -170,12 +173,12 @@
         }
         .view-counter-inner i { color: #ccc; font-size: 12px; }
 
-        /* Sol Alt Ses Kontrol Paneli */
+        /* Sol Alt Ses Ayar Paneli */
         .audio-control {
             position: absolute;
             bottom: 20px;
             left: 20px;
-            background: rgba(18, 18, 22, 0.7);
+            background: rgba(18, 18, 22, 0.65);
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             padding: 8px 14px;
@@ -219,7 +222,6 @@
         <source src="/Rarity43_pindown.io_1788465739.mp4" type="video/mp4">
     </video>
 
-    <!-- Sol Alt Ses Ayar Paneli -->
     <div class="audio-control">
         <button id="muteBtn"><i class="fa-solid fa-volume-high"></i></button>
         <input type="range" id="volumeSlider" class="audio-slider" min="0" max="1" step="0.05" value="1">
@@ -272,10 +274,18 @@
     </div>
 
     <script>
+        // Tarayıcı Sekmesi İçin Oynak (Kayan) Başlık Efekti
+        let titleText = "Flozzy • ";
+        let titleIndex = 0;
+        function marqueeTitle() {
+            document.title = titleText.substring(titleIndex) + titleText.substring(0, titleIndex);
+            titleIndex = (titleIndex + 1) % titleText.length;
+        }
+        setInterval(marqueeTitle, 300);
+
         const userId = "<%= user.id %>";
         let currentTimer = null;
 
-        // Benzersiz Ziyaretçi Sayacı (Farklı tarayıcı/cihaz başına 1 kez sayar)
         if (!localStorage.getItem('flozzy_visited')) {
             localStorage.setItem('flozzy_visited', 'true');
             fetch('/api/increment-view', { method: 'POST' })
@@ -399,7 +409,6 @@
         fetchLanyard();
         setInterval(fetchLanyard, 5000);
 
-        // Click to Enter ve Ses Kontrolleri
         const enterOverlay = document.getElementById('enterOverlay');
         const bgVideo = document.getElementById('bgVideo');
         const muteBtn = document.getElementById('muteBtn');
