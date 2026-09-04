@@ -39,9 +39,9 @@ app.get('/', (req, res) => {
 app.get('/profile', (req, res) => {
     const settings = getSettings();
     const user = {
-        id: '768037537792524308',
-        username: 'kwnzy.0',
-        global_name: 'Kwenzy♱'
+        id: '772859992109875252',
+        username: 'morfixcik',
+        global_name: 'Flozzy'
     };
     res.render('profile', { user, settings });
 });
