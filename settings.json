@@ -1,0 +1,7 @@
+{
+  "bgType": "video",
+  "bgUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+  "musicUrl": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  "bioText": "Merhaba",
+  "adminPassword": "123"
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #050505; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .admin-card {
+            background: rgba(15, 15, 18, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+        }
+        h2 { font-size: 24px; font-weight: 700; color: #5865f2; text-align: center; margin-bottom: 2px; }
+        .alert-success {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            color: #2ecc71;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        label { font-size: 11px; color: #b9bbbe; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select, textarea {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 14px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+        }
+        input:focus, select:focus, textarea:focus { border-color: #5865f2; }
+        textarea { resize: vertical; min-height: 60px; }
+        .save-btn {
+            background: #5865f2; color: #fff; border: none; padding: 12px;
+            border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; transition: background 0.2s;
+        }
+        .save-btn:hover { background: #4752c4; }
+        .back-link { display: block; text-align: center; color: #888; font-size: 12px; text-decoration: none; }
+        .back-link:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="admin-card">
+        <h2>Admin Paneli</h2>
+        <% if (locals.success) { %>
+            <div class="alert-success">Ayarlar başarıyla kaydedildi!</div>
+        <% } %>
+        <form action="/admin/save" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Admin Şifresi</label>
+                <input type="password" name="password" placeholder="Giriş Şifresi (123)" required>
+            </div>
+            <div class="form-group">
+                <label>Arka Plan Tipi</label>
+                <select name="bgType">
+                    <option value="color" <%= settings.bgType === 'color' ? 'selected' : '' %>>Düz Renk</option>
+                    <option value="image" <%= settings.bgType === 'image' ? 'selected' : '' %>>Resim Dosyası</option>
+                    <option value="video" <%= settings.bgType === 'video' ? 'selected' : '' %>>Video Dosyası (.mp4)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Renk Kodu Veya Dosya Seç</label>
+                <input type="text" name="bgUrl" value="<%= settings.bgUrl %>" placeholder="#050505">
+                <input type="file" name="bgFile" style="margin-top: 4px; font-size: 11px;">
+            </div>
+            <div class="form-group">
+                <label>Arka Plan Müzik Dosyası (.mp3)</label>
+                <input type="file" name="musicFile" accept=".mp3,audio/*" style="font-size: 11px;">
+            </div>
+            <div class="form-group">
+                <label>Biyo Yazısı</label>
+                <textarea name="bioText"><%= settings.bioText %></textarea>
+            </div>
+            <button type="submit" class="save-btn">Ayarları Kaydet</button>
+        </form>
+        <a href="/profile" class="back-link">← Profile Geri Dön</a>
+    </div>
+</body>
+</html>
