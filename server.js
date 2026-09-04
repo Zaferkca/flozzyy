@@ -36,13 +36,38 @@ app.get('/', (req, res) => {
     res.redirect('/profile');
 });
 
-app.get('/profile', (req, res) => {
+app.get('/profile', async (req, res) => {
     const settings = getSettings();
-    const user = {
-        id: '772859992109875252',
+    const userId = '772859992109875252';
+    
+    let user = {
+        id: userId,
         username: 'morfixcik',
-        global_name: 'Flozzy'
+        global_name: 'Flozzy',
+        avatar_decoration_url: null
     };
+
+    try {
+        const response = await fetch(`https://api.lanyard.rest/v1/users/${userId}`);
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+            const dUser = result.data.discord_user;
+            if (dUser) {
+                user.username = dUser.username || user.username;
+                user.global_name = dUser.global_name || user.global_name;
+                
+                const decoData = dUser.avatar_decoration_data || result.data.avatar_decoration_data;
+                if (decoData && decoData.asset) {
+                    const ext = decoData.asset.startsWith('a_') ? 'gif' : 'png';
+                    user.avatar_decoration_url = `https://cdn.discordapp.com/avatar-decorations/${userId}/${decoData.asset}.${ext}`;
+                }
+            }
+        }
+    } catch (err) {
+        console.error("Lanyard API hatası:", err);
+    }
+
     res.render('profile', { user, settings });
 });
 
