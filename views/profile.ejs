@@ -89,6 +89,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            display: none; /* Varsayılan olarak gizli başlar */
         }
 
         .glow-username { 
@@ -239,8 +240,8 @@
 
     <div class="avatar-container">
         <img id="mainAvatar" class="main-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Avatar">
-        <!-- Discord API'den gelen dinamik çerçeve görseli buraya basılacak -->
-        <img id="avatarFrame" class="avatar-frame" src="" alt="" style="display: none;">
+        <!-- Çerçeve elementine başlangıçta src verilmedi, güvenli hale getirildi -->
+        <img id="avatarFrame" class="avatar-frame" alt="Frame">
     </div>
 
     <div class="glow-username">
@@ -330,15 +331,19 @@
                         document.getElementById('cardAvatar').src = avatarUrl;
                     }
 
-                    // Discord Profil Çerçevesini (Avatar Decoration) Lanyard üzerinden yakalama
+                    // Gelişmiş Çerçeve Kontrolü (Discord API / Lanyard Verisi)
                     const avatarFrame = document.getElementById('avatarFrame');
-                    if (discordUser && discordUser.avatar_decoration_data && discordUser.avatar_decoration_data.asset) {
-                        const assetId = discordUser.avatar_decoration_data.asset;
+                    
+                    // Lanyard içinde bazen discord_user.avatar_decoration_data veya data.avatar_decoration_data olarak gelebilir
+                    const decorationData = (discordUser && discordUser.avatar_decoration_data) || l.avatar_decoration_data;
+
+                    if (decorationData && decorationData.asset) {
+                        const assetId = decorationData.asset;
                         const frameExt = assetId.startsWith('a_') ? 'gif' : 'png';
-                        avatarFrame.src = `https://cdn.discordapp.com/avatar-decorations/${discordUser.id}/${assetId}.${frameExt}`;
-                        avatarFrame.style.display = 'block';
+                        avatarFrame.src = `https://cdn.discordapp.com/avatar-decorations/${userId}/${assetId}.${frameExt}`;
+                        avatarFrame.style.display = 'block'; // Çerçeve varsa göster
                     } else {
-                        avatarFrame.style.display = 'none';
+                        avatarFrame.style.display = 'none'; // Çerçeve yoksa gizle (kırık resim çıkmaz)
                     }
 
                     const statusDot = document.getElementById('statusDot');
